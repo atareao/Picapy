@@ -1,0 +1,178 @@
+# French translations for PACKAGE package.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Lorenzo Carbonell <EMAIL@ADDRESS>, 2010.
+#
+#: picapy.py:454
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-19 20:06+0100\n"
+"PO-Revision-Date: 2010-12-05 13:34+0100\n"
+"Last-Translator: Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: InformacionAlbum.py:54 InformacionImagen.py:66 picapy.py:160
+msgid "Information"
+msgstr "Information"
+
+#: InformacionAlbum.py:55 InformacionImagen.py:67 NuevoAlbum.py:52
+#: PreferenciasWindow.py:59 VerImagen.py:53
+msgid "Ok"
+msgstr "Ok"
+
+#: InformacionAlbum.py:56 InformacionImagen.py:68 NuevoAlbum.py:54
+msgid "Album"
+msgstr "Album"
+
+#: InformacionAlbum.py:57 InformacionImagen.py:69
+msgid "Id"
+msgstr "Id"
+
+#: InformacionAlbum.py:58
+msgid "Images"
+msgstr "Images"
+
+#: InformacionImagen.py:70
+msgid "Camera"
+msgstr "Caméra"
+
+#: InformacionImagen.py:71
+msgid "Url"
+msgstr "Url"
+
+#: InformacionImagen.py:72 InformacionImagen.py:73 InformacionImagen.py:74
+msgid "Thumbnail"
+msgstr "Vignette"
+
+#: InformacionImagen.py:81
+msgid "unknown"
+msgstr "Inconnue"
+
+#: NuevoAlbum.py:51
+msgid "Create new Album"
+msgstr "Créer un nouvel album"
+
+#: NuevoAlbum.py:53 PreferenciasWindow.py:60
+msgid "Cancel"
+msgstr "Annuler"
+
+#: picapy.py:158
+msgid "File"
+msgstr "Fichier"
+
+#: picapy.py:159
+msgid "Edit"
+msgstr "Éditer"
+
+#: picapy.py:161
+msgid "Help"
+msgstr "Aider"
+
+#: picapy.py:162
+msgid "Download"
+msgstr "Télécharger"
+
+#: picapy.py:163
+msgid "Copy link to clipboard"
+msgstr "Copier le lien dans le presse papier"
+
+#: picapy.py:164
+msgid "Copy thumbnail 72x72 link to clipboard"
+msgstr "Copier le lien de la vignette 72x72 dans le presse papier"
+
+#: picapy.py:165
+msgid "Copy thumbnail 144x144 link to clipboard"
+msgstr "Copier le lien de la vignette 144x144 dans le presse papier"
+
+#: picapy.py:166
+msgid "Copy thumbnail 288x288 link to clipboard"
+msgstr "Copier le lien de la vignette 288x288 dans le presse papier"
+
+#: picapy.py:167
+msgid "Up"
+msgstr "Jusqu'à"
+
+#: picapy.py:168
+msgid "Add"
+msgstr "Ajouter"
+
+#: picapy.py:169
+msgid "Remove"
+msgstr "Supprimer"
+
+#: picapy.py:170
+msgid "Exit from Picapy"
+msgstr "Sortir de Picapy"
+
+#: picapy.py:342
+#, python-format
+msgid "Do you want to delete %s folders?"
+msgstr "Voulez-vous supprimer %s dossiers?"
+
+#: picapy.py:344
+msgid "Do you want to delete this folder?"
+msgstr "Voulez-vous supprimer ce dossier?"
+
+#: picapy.py:366
+#, python-format
+msgid "Do you want to delete %s images?"
+msgstr "Voulez-vous supprimer %s images?"
+
+#: picapy.py:368
+msgid "Do you want to delete this image?"
+msgstr "Voulez-vous supprimer cette image?"
+
+#: picapy.py:398
+msgid "Select one or more images to upload to Picasa Web"
+msgstr "Sélectionnez une ou plusieurs images à télécharger sur Picasa Web"
+
+#: picapy.py:406
+msgid "Imagenes"
+msgstr "Images"
+
+#: picapy.py:453
+msgid ""
+"An application to manage your images in\n"
+"Picasa Web"
+msgstr ""
+"Une application pour gérer vos images dans\n"
+"Picasa Web"
+
+#: Picasa.py:69
+msgid "Created with Picapy"
+msgstr "Créé avec Picapy"
+
+#: Picasa.py:73
+msgid "New Photo"
+msgstr "Nouvelle photo"
+
+#: Picasa.py:73
+msgid "Uploaded using Picapy"
+msgstr "Envoyé à l'aide Picapy"
+
+#: PreferenciasWindow.py:58
+msgid "Preferences"
+msgstr "Préférences"
+
+#: PreferenciasWindow.py:61
+msgid "Email"
+msgstr "Email"
+
+#: PreferenciasWindow.py:62
+msgid "Password"
+msgstr "Mot de passe"
+
+#: Progreso.py:48
+msgid "Progress"
+msgstr "Progrès"
+
+#: VerImagen.py:52
+msgid "Picapy"
+msgstr "Picapy"
