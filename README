@@ -1,0 +1,33 @@
+======
+Picapy
+======
+
+Picapy is a manager for Picasa Web
+
+For more information, please visit our website:
+http://launchpad.net/picapy/
+or
+http://www.atareao.es
+
+============
+Requirements
+============
+
+Required dependencies:
+
+
+========
+Download
+========
+
+Download the package:
+
+    $ bzr branch lp:picapy
+============
+Installation
+============
+
+    $ cd /path/to/picapy
+    $ ./tools -deb
+    $ cd dist
+    $ sudo dpkg -i picapy.deb

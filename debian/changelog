@@ -1,0 +1,44 @@
+picapy (2.1.2-0extras14.04.2) trusty; urgency=low
+
+  * Fixed deprecated instances
+  * Version from changelog
+
+ -- Lorenzo Carbonell <atareao@trusty>  Mon, 24 Mar 2014 08:03:15 +0100
+
+picapy (2.1.2-0extras14.04.0) trusty; urgency=low
+
+  * Reduced space between images
+
+ -- Lorenzo Carbonell <atareao@trusty>  Mon, 24 Feb 2014 02:08:44 +0100
+
+picapy (2.1.1-0extras14.04.1) trusty; urgency=medium
+
+  * Fixed a bug with main window background
+
+ -- Lorenzo Carbonell <atareao@trusty>  Sat, 22 Feb 2014 08:01:31 +0100
+
+picapy (2.1.1-0extras13.04.0) raring; urgency=low
+
+  * Changed application icon
+  * Added slideslow feature
+  * Improved design
+  * Fixed a bug with photos id
+  * Fixed a bug with albums id
+  * Fixed a bug with self.album
+  * Working with futures
+  * Load all albums and photos (a little bug)
+  * Improved uploads and downloads
+  * improved copy&paste
+  * Improved upload
+  * Improved drag and drop
+  * updated translations
+  * Ported to Python3
+  * Using Picasa Web Albums Data API 2.0
+  * Show main image in albums
+  * Can edit images
+  * Improve speed for upload and download
+  * Changed icon
+  * Added icon for permisions
+  * Using config dir to save temporary images
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 21 Apr 2013 14:29:39 +0200
