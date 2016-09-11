@@ -18,31 +18,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
-#
+
 import os
 import sys
-import logging
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-from gi.repository import Notify
 
+print(__file__)
 if __name__ == '__main__':
-	if __file__.startswith('/opt/extras.ubuntu.com') or os.getcwd().startswith('/opt/extras.ubuntu.com'):
-		sys.path.insert(1, '/opt/extras.ubuntu.com/picapy/share/picapy')
-	else:
-		sys.path.insert(1,os.path.normpath(os.path.join(os.getcwd(), '../src')))
-	####################################################################
-	from picapy import Picapy
-	####################################################################
-	if os.path.exists('/tmp/picapy.log'):
-		os.remove('/tmp/picapy.log')
-	logging.basicConfig(filename="/tmp/picapy.log", level=logging.INFO)	
-	logging.info("Program started")
-	v = Picapy()
-	Gtk.main()
-	logging.info("Done!")		
+    if __file__.startswith('/opt/extras.ubuntu.com') or\
+             os.getcwd().startswith('/opt/extras.ubuntu.com'):
+        sys.path.insert(1, '/opt/extras.ubuntu.com/picapy/share/picapy')
+    else:
+        path = os.path.normpath(os.path.join(__file__, '../../src'))
+        print(path)
+        sys.path.insert(1, path)
+    ####################################################################
+    from picapy import main
+    ####################################################################
+    main()
 exit(0)
-	

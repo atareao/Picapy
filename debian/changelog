@@ -1,10 +1,10 @@
-picapy (2.2.0-0extras16.04.0) xenial; urgency=medium
+picapy (2.2.0-0extras16.04.1) xenial; urgency=medium
 
   * Improved UI:
   * - Removed lateral buttons
   * - Using header menu
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 11 Sep 2016 09:41:58 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 11 Sep 2016 20:43:34 +0200
 
 picapy (2.1.2-0extras14.04.2) trusty; urgency=low
 

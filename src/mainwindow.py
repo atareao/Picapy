@@ -405,7 +405,7 @@ class MainWindow (Gtk.ApplicationWindow):
                         files.append(location)
                         selection.set_uris(files)
 
-    def drag_data_received(self,widget, drag_context, x, y, selection_data, info, timestamp):
+    def drag_data_received(self, widget, drag_context, x, y, selection_data, info, timestamp):
         if self.album!=None:
             filenames = selection_data.get_uris()
             for_upload = []
@@ -529,7 +529,7 @@ class MainWindow (Gtk.ApplicationWindow):
                 for album in self.albums:
                     to_json[album.params['id']]=album.params
                     if data is None or album.params['id'] not in data.keys() or (data[album.params['id']]['etag'] != album.params['etag']):
-                        executor.submit(create_icon_for_album,album)
+                        executor.submit(utils.create_icon_for_album,album)
             for album in self.albums:
                 mfile = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id']+'.png')
                 if os.path.exists(mfile):
@@ -543,7 +543,7 @@ class MainWindow (Gtk.ApplicationWindow):
             f.write(json.dumps(to_json))
             f.close()
 
-    def on_edit_activated(self,widget):
+    def on_edit_activated(self, widget):
         items = self.iconview1.get_selected_items()
         if len(items)>0:
             if self.album==None:
@@ -601,7 +601,7 @@ class MainWindow (Gtk.ApplicationWindow):
                         self.storeimages.set_value(selected,2,updated_image)
                 i.destroy()
 
-    def on_informacion_activated(self,widget):
+    def on_informacion_activated(self, widget):
         items = self.iconview1.get_selected_items()
         if len(items)>0:
             if self.album==None:
@@ -700,195 +700,180 @@ class MainWindow (Gtk.ApplicationWindow):
             self.set_normal_cursor()
         chooser.destroy()
 
-    def on_about_activate(self,widget):
-        ad=Gtk.AboutDialog()
-        ad.set_name(comun.APPNAME)
-        ad.set_version(comun.VERSION)
-        ad.set_copyright('Copyrignt (c) 2010-2014\nLorenzo Carbonell')
-        ad.set_comments(_('An application to manage your images in\nPicasa Web'))
-        ad.set_license(''+
-        'This program is free software: you can redistribute it and/or modify it\n'+
-        'under the terms of the GNU General Public License as published by the\n'+
-        'Free Software Foundation, either version 3 of the License, or (at your option)\n'+
-        'any later version.\n\n'+
-        'This program is distributed in the hope that it will be useful, but\n'+
-        'WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n'+
-        'or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for\n'+
-        'more details.\n\n'+
-        'You should have received a copy of the GNU General Public License along with\n'+
-        'this program.  If not, see <http://www.gnu.org/licenses/>.')
-        ad.set_website('http://www.atareao.es')
-        ad.set_website_label('http://www.atareao.es')
-        ad.set_authors(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-        ad.set_documenters(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-        ad.set_translator_credits(''+
-        'Dario Villar Veres <dario.villar.v@gmail.com>\n'+
-        'Bernardo Miguel	Savone <bmsavone@gmail.com>\n'+
-        'Enbata <peionz@euskalnet.net>\n'+
-        'Mario Blättermann <mariobl@gnome.org>\n'+
-        'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n'+
-        'zeugma <https://launchpad.net/~sunder67>\n'+
-        'Alin Andrei <https://launchpad.net/~nilarimogard>\n'+
-        'Fitoschido <fitoschido@gmail.com>\n'+
-        'Daniele Lucarelli <https://launchpad.net/~ldanivvero>\n'+
-        'Alejandro Martín Covarrubias <alex.covarrubias@gmail.com>\n'+
-        'Rustam Vafin\n'+
-        'elmodos\n'+
-        'extraymond@gmail.com <extraymond@gmail.com>\n'+
-        'fgp <https://launchpad.net/~komakino>\n')
-        ad.set_program_name('Picapy')
-        ad.set_logo(GdkPixbuf.Pixbuf.new_from_file(comun.ICON))
-        ad.run()
-        ad.destroy()
-
     def set_wait_cursor(self):
         self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
         while Gtk.events_pending():
             Gtk.main_iteration()
+
     def set_normal_cursor(self):
         self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
         while Gtk.events_pending():
             Gtk.main_iteration()
 
-    def on_descargar_activated(self,widget):
+    def on_descargar_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            if self.album==None:
-                chooser = Gtk.FileChooserDialog(title=_('Select where to download the album'),parent=self,action=Gtk.FileChooserAction.SELECT_FOLDER,buttons=(Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN,Gtk.ResponseType.OK))
+        if len(items) > 0:
+            if self.album is None:
+                chooser = Gtk.FileChooserDialog(
+                    title=_('Select where to download the album'),
+                    parent=self,
+                    action=Gtk.FileChooserAction.SELECT_FOLDER,
+                    buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
                 chooser.set_current_folder(self.image_dir)
                 if chooser.run() == Gtk.ResponseType.OK:
-                    filename=chooser.get_filename()
+                    filename = chooser.get_filename()
                     self.image_dir = os.path.dirname(filename)
-                    if self.image_dir is None or len(self.image_dir)<=0 or not os.path.exists(self.image_dir):
+                    if self.image_dir is None or len(self.image_dir) <= 0 or\
+                            not os.path.exists(self.image_dir):
                         self.image_dir = os.getenv('HOME')
                     chooser.destroy()
-                    if len(items)>0:
+                    if len(items) > 0:
                         self.set_wait_cursor()
                         daemons = []
                         global cuain
                         cuain = queue.Queue()
                         for item in items:
                             itera = self.store.get_iter_from_string(str(item))
-                            album=self.store.get_value(itera,2)
-                            folder = os.path.join(filename,album.params['id'])
+                            album = self.store.get_value(itera, 2)
+                            folder = os.path.join(filename, album.params['id'])
                             if not os.path.exists(folder):
                                 os.mkdir(folder)
-                            photos=self.picasa.get_photos(album.params['id'])
+                            photos = self.picasa.get_photos(album.params['id'])
                             #
-                            with concurrent.futures.ProcessPoolExecutor(max_workers=NUM_THREADS) as executor:
+                            with concurrent.futures.ProcessPoolExecutor(
+                                    max_workers=NUM_THREADS) as executor:
                                 for photo in photos:
-                                    executor.submit(utils.download_all_images,folder,photo)
-
+                                    executor.submit(
+                                        utils.download_all_images,
+                                        folder,
+                                        photo)
                         self.set_normal_cursor()
                 chooser.destroy()
             else:
-                chooser = Gtk.FileChooserDialog(title=_('Select where download images'),parent=self,action=Gtk.FileChooserAction.SELECT_FOLDER,buttons=(Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN,Gtk.ResponseType.OK))
+                chooser = Gtk.FileChooserDialog(
+                    title=_('Select where download images'),
+                    parent=self,
+                    action=Gtk.FileChooserAction.SELECT_FOLDER,
+                    buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
                 if chooser.run() == Gtk.ResponseType.OK:
-                    dirname=chooser.get_filename()
+                    dirname = chooser.get_filename()
                     chooser.destroy()
                     self.set_wait_cursor()
                     for item in items:
-                        selected=self.storeimages.get_iter_from_string(str(item))
-                        imagen=self.storeimages.get_value(selected,2)
+                        selected = self.storeimages.get_iter_from_string(
+                            str(item))
+                        imagen = self.storeimages.get_value(selected, 2)
                         filename = imagen.params['url'].split('/')[-1]
-                        filename = os.path.join(dirname,filename)
-                        utils.download_image(imagen.params['url'],filename)
+                        filename = os.path.join(dirname, filename)
+                        utils.download_image(imagen.params['url'], filename)
                     self.set_normal_cursor()
 
-    def on_menuitem6_activated(self,widget):
+    def on_menuitem6_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen=self.storeimages.get_value(selected,2)
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             text = imagen.params['url']
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_text(text, -1)
 
-    def on_menuitem7_activated(self,widget):
+    def on_menuitem7_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen=self.storeimages.get_value(selected,2)
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             text = imagen.thumbnails[0]['url']
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_text(text, -1)
 
-    def on_menuitem8_activated(self,widget):
+    def on_menuitem8_activated(self, ):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen=self.storeimages.get_value(selected,2)
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             text = imagen.thumbnails[1]['url']
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_text(text, -1)
 
-    def on_menuitem9_activated(self,widget):
+    def on_menuitem9_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen=self.storeimages.get_value(selected,2)
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             text = imagen.thumbnails[2]['url']
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_image(text, -1)
 
-
-    def on_menuitem10_activated(self,widget):
+    def on_menuitem10_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen=self.storeimages.get_value(selected,2)
-            #text = '<a class="highslide" title="%TITLE%" onclick="return hs.expand(this)" href="%URL%"> <img class="aligncenter" title="%TITLE%" src="%URL288%" alt="%TITLE%"/></a>'
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             text = self.image_link
-            text = text.replace('%TITLE%',imagen.params['title'])
-            text = text.replace('%URL%',imagen.params['url'])
-            text = text.replace('%URL72%',imagen.thumbnails[0]['url'])
-            text = text.replace('%URL144%',imagen.thumbnails[1]['url'])
-            text = text.replace('%URL288%',imagen.thumbnails[2]['url'])
+            text = text.replace('%TITLE%', imagen.params['title'])
+            text = text.replace('%URL%', imagen.params['url'])
+            text = text.replace('%URL72%', imagen.thumbnails[0]['url'])
+            text = text.replace('%URL144%', imagen.thumbnails[1]['url'])
+            text = text.replace('%URL288%', imagen.thumbnails[2]['url'])
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_text(text, -1)
 
-    def on_menuitem11_activated(self,widget):
+    def on_menuitem11_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            selected=self.storeimages.get_iter_from_string(str(items[0]))
-            imagen = self.storeimages.get_value(selected,2)
+        if len(items) > 0:
+            selected = self.storeimages.get_iter_from_string(str(items[0]))
+            imagen = self.storeimages.get_value(selected, 2)
             pixbuf = utils.get_pixbuf_from_url(imagen.params['url'])
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = self.iconview1.get_clipboard(atom)
             clipboard.set_image(pixbuf)
             clipboard.store()
 
-    def on_menuitem12_activated(self,widget):
-        if self.album != None:
+    def on_menuitem12_activated(self, widget):
+        if self.album is not None:
             atom = Gdk.atom_intern('CLIPBOARD', True)
             clipboard = Gtk.Clipboard.get(atom)
             pixbuf = clipboard.wait_for_image()
-            if pixbuf != None:
-                ia = PasteImage(self,None)
+            if pixbuf is not None:
+                ia = PasteImage(self, None)
                 if ia.run() == Gtk.ResponseType.ACCEPT:
                     titulo = ia.entry1.get_text()
                     sumario = ia.entry2.get_text()
                     ia.destroy()
-                    if titulo!=None and len(titulo)>0:
-                        photo = self.picasa.add_image_from_pixbuf(self.album.params['id'],pixbuf,titulo,sumario,self.reduce_size,self.max_size,self.reduce_colors)
-                        mdir = os.path.join(comun.IMAGES_DIR, 'album_'+self.album.params['id'])
+                    if titulo is not None and len(titulo) > 0:
+                        photo = self.picasa.add_image_from_pixbuf(
+                            self.album.params['id'],
+                            pixbuf,
+                            titulo,
+                            sumario,
+                            self.reduce_size,
+                            self.max_size,
+                            self.reduce_colors)
+                        mdir = os.path.join(
+                            comun.IMAGES_DIR, 'album_'+self.album.params['id'])
                         if not os.path.exists(mdir):
                             os.makedirs(mdir)
-                        mfile = os.path.join(mdir, 'photo_'+photo.params['id']+'.png')
-                        utils.create_icon(mfile,photo.params['thumbnail2'],photo.params['access'])
+                        mfile = os.path.join(
+                            mdir, 'photo_'+photo.params['id']+'.png')
+                        utils.create_icon(
+                            mfile,
+                            photo.params['thumbnail2'],
+                            photo.params['access'])
                         if os.path.exists(mfile):
                             pixbuf = GdkPixbuf.Pixbuf.new_from_file(mfile)
                         else:
                             pixbuf = PIXBUF_DEFAULT_PHOTO
-                        self.storeimages.prepend([pixbuf,titulo,photo])
+                        self.storeimages.prepend([pixbuf, titulo, photo])
                 ia.destroy()
 
-    def on_iconview1_button_press_event(self,widget,event):
+    def on_iconview1_button_press_event(self, widget, event):
         #
         # if event.button==1 and event.type==Gdk.BUTTON_PRESS:
         #
@@ -896,9 +881,9 @@ class MainWindow (Gtk.ApplicationWindow):
         # it starts with number so use Gdk.EventType(value = 5) to construct
         # 2BUTTON_PRESS event type
         if event.button == 1 and event.type == Gdk.EventType(value=5):
-            if self.album==None:
+            if self.album is None:
                 items = self.iconview1.get_selected_items()
-                if len(items)>0:
+                if len(items) > 0:
                     selected=self.store.get_iter_from_string(str(items[0]))
                     self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
                     while Gtk.events_pending():

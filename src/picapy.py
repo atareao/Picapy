@@ -187,15 +187,27 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>.
 ''')
-        about_dialog.set_website('http://www.atareao.es')
-        about_dialog.set_website_label('http://www.atareao.es')
-        about_dialog.set_authors([
-            'Lorenzo Carbonell <https://launchpad.net/~lorenzo-carbonell>'])
-        about_dialog.set_documenters([
-            'Lorenzo Carbonell <https://launchpad.net/~lorenzo-carbonell>'])
-        about_dialog.set_translator_credits('''
-Lorenzo Carbonell <https://launchpad.net/~lorenzo-carbonell>\n
-''')
+        ad.set_website('https://www.atareao.es')
+        ad.set_website_label('https://www.atareao.es')
+        ad.set_authors([
+            'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
+        ad.set_documenters([
+            'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
+        ad.set_translator_credits('''
+'Dario Villar Veres <dario.villar.v@gmail.com>\n'+
+'Bernardo Miguel	Savone <bmsavone@gmail.com>\n'+
+'Enbata <peionz@euskalnet.net>\n'+
+'Mario Blättermann <mariobl@gnome.org>\n'+
+'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n'+
+'zeugma <https://launchpad.net/~sunder67>\n'+
+'Alin Andrei <https://launchpad.net/~nilarimogard>\n'+
+'Fitoschido <fitoschido@gmail.com>\n'+
+'Daniele Lucarelli <https://launchpad.net/~ldanivvero>\n'+
+'Alejandro Martín Covarrubias <alex.covarrubias@gmail.com>\n'+
+'Rustam Vafin\n'+
+'elmodos\n'+
+'extraymond@gmail.com <extraymond@gmail.com>\n'+
+'fgp <https://launchpad.net/~komakino>\n''')
         about_dialog.set_icon(GdkPixbuf.Pixbuf.new_from_file(comun.ICON))
         about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file(comun.ICON))
         about_dialog.set_program_name(comun.APPNAME)
