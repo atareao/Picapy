@@ -1,12 +1,10 @@
-#! /usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
+# This file is part of picapy
 #
-# managers.py
-# 
-# A python wrapper for the Google Reader
-#
-# Copyright (C) 2012 Lorenzo Carbonell
+# Copyright (C) 2010-2016 Lorenzo Carbonell
+
 # lorenzo.carbonell.cerezo@gmail.com
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,4 +25,3 @@ __date__ ='$11/11/2012'
 __copyright__ = 'Copyright (c) 2012 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-
