@@ -28,8 +28,10 @@ except Exception as e:
     print(e)
     exit(-1)
 from gi.repository import Gtk
+from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 import urllib.request
+import comun
 import os
 from os import path
 import time
@@ -89,14 +91,12 @@ def get_pixbuf_from_url(url):
         return pixbuf
     except Exception as e:
         print(e)
-        logging.info(e)
     return PIXBUF_DEFAULT_ALBUM
 
 
 def create_icon(output, url, access):
     pixbuf_main = get_pixbuf_from_url(url)
     status_icon_file = os.path.join(comun.IMGDIR, access+'.svg')
-    logging.info(access)
     pixbuf_icon = GdkPixbuf.Pixbuf.new_from_file(status_icon_file)
     if pixbuf_main is not None and pixbuf_icon is not None:
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 100, 100)
@@ -177,7 +177,7 @@ def get_album(album, force=False):
                'album': album}
         return ans
     except Exception as e:
-        logging.info(e)
+        print(e)
     return None
 
 
@@ -309,7 +309,7 @@ def upload_an_image(picasa, reduce_size, size, colors, album_id, filename,
                                      reduce_size, size, colors)
             uploaded = True
         except Exception as e:
-            logging.info(e)
+            print(e)
             wait(await)
             await += .1
     if photo is not None:
@@ -329,5 +329,48 @@ def upload_an_image(picasa, reduce_size, size, colors, album_id, filename,
                    'pixbuf': pixbuf,
                    'photo_name': photo_name,
                    'photo': photo}
+        return ans
+    return None
+
+
+def remove_an_image(iter, picasa, storeimages, album):
+    image = storeimages.get_value(iter, 2)
+    if picasa.delete_photo(album, image):
+        return iter
+    return None
+
+
+def upload_an_image2(filename, picasa, reduce_size, size, colors, album_id,
+                     title=None, comment=None):
+    uploaded = False
+    if title is None:
+        title = os.path.basename(filename)
+    while not uploaded:
+        try:
+            photo = picasa.add_image(album_id, filename, title, comment,
+                                     reduce_size, size, colors)
+            uploaded = True
+        except Exception as e:
+            print(e)
+            wait(await)
+            await += .1
+    if photo is not None and uploaded is True:
+        photo_name = photo.params['title']
+        mdir = os.path.join(comun.IMAGES_DIR, 'album_'+album_id)
+        if not os.path.exists(mdir):
+            os.makedirs(mdir)
+        mfile = os.path.join(mdir, 'photo_'+photo.params['id']+'.png')
+        if os.path.exists(mfile):
+            os.remove(mfile)
+        create_icon(mfile, photo.params['thumbnail2'], photo.params['access'])
+        if os.path.exists(mfile):
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(mfile)
+        else:
+            pixbuf = PIXBUF_DEFAULT_PHOTO
+        ans = {'index': photo.params['edited'],
+               'pixbuf': pixbuf,
+               'photo_name': photo_name,
+               'photo': photo,
+               'album_id': album_id}
         return ans
     return None

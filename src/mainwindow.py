@@ -62,6 +62,7 @@ from informacionimagen import InformacionImagen
 from verimagen import VerImagen
 from logindialog import LoginDialog
 from slider import SliderWindow
+from tasker import Tasker
 #
 from preferences import Preferences
 from progreso import Progreso
@@ -92,10 +93,21 @@ PIXBUF_DEFAULT_ALBUM = GdkPixbuf.Pixbuf.new_from_file(comun.DEFAULT_ALBUM)
 PIXBUF_DEFAULT_PHOTO = GdkPixbuf.Pixbuf.new_from_file(comun.DEFAULT_PHOTO)
 
 
-print(Gio)
-
-
 class MainWindow (Gtk.ApplicationWindow):
+    __gsignals__ = {
+        'uploaded-image': (GObject.SIGNAL_RUN_FIRST,
+                           GObject.TYPE_NONE,
+                           (object,)),
+        'uploaded-album': (GObject.SIGNAL_RUN_FIRST,
+                           GObject.TYPE_NONE,
+                           (object,)),
+        'downloaded-image': (GObject.SIGNAL_RUN_FIRST,
+                             GObject.TYPE_NONE,
+                             (object,)),
+        'downloaded-album': (GObject.SIGNAL_RUN_FIRST,
+                             GObject.TYPE_NONE,
+                             (object,)),
+        }
 
     def __init__(self, app):
         Gtk.ApplicationWindow.__init__(self, application=app)
@@ -124,7 +136,8 @@ class MainWindow (Gtk.ApplicationWindow):
                                Gtk.DialogFlags.DESTROY_WITH_PARENT),
                         type=Gtk.MessageType.ERROR,
                         buttons=Gtk.ButtonsType.OK_CANCEL,
-                        message_format=_('You have to authorize Picapy to use it, do you want to authorize?'))
+                        message_format=_('You have to authorize Picapy to use \
+it, do you want to authorize?'))
                     if md.run() == Gtk.ResponseType.CANCEL:
                         exit(3)
                 else:
@@ -260,57 +273,62 @@ class MainWindow (Gtk.ApplicationWindow):
         vbox = Gtk.VBox()
         self.add(vbox)
         #
-        vbox1 = Gtk.VBox(spacing = 0)
+        vbox1 = Gtk.VBox(spacing=0)
         vbox1.set_border_width(0)
         vbox.add(vbox1)
         #
         hbox = Gtk.HBox()
-        vbox1.pack_start(hbox,True,True,0)
+        vbox1.pack_start(hbox, True, True, 0)
         #
         vbox3 = Gtk.VBox()
-        hbox.pack_start(vbox3,True,True,0)
+        hbox.pack_start(vbox3, True, True, 0)
         #
         scrolledwindow = Gtk.ScrolledWindow()
-        scrolledwindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolledwindow.set_policy(Gtk.PolicyType.AUTOMATIC,
+                                  Gtk.PolicyType.AUTOMATIC)
         scrolledwindow.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)
-        vbox3.pack_start(scrolledwindow,True,True,0)
+        vbox3.pack_start(scrolledwindow, True, True, 0)
         self.iconview1 = Gtk.IconView()
         self.iconview1.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
         scrolledwindow.add(self.iconview1)
 
         backgroundVBox2 = Gtk.EventBox()
-        hbox.pack_start(backgroundVBox2,False,False,0)
+        hbox.pack_start(backgroundVBox2, False, False, 0)
         #
-        self.menu_emergente=Gtk.Menu()
+        self.menu_emergente = Gtk.Menu()
         self.menuitem3 = Gtk.MenuItem.new_with_label(_('Information'))
-        self.menuitem3.connect('activate',self.on_informacion_activated)
+        self.menuitem3.connect('activate', self.on_informacion_activated)
         self.menu_emergente.append(self.menuitem3)
         self.menuitem4 = Gtk.MenuItem.new_with_label(_('Edit'))
-        self.menuitem4.connect('activate',self.on_edit_activated)
+        self.menuitem4.connect('activate', self.on_edit_activated)
         self.menu_emergente.append(self.menuitem4)
         self.menuitem5 = Gtk.MenuItem.new_with_label(_('Download'))
-        self.menuitem5.connect('activate',self.on_descargar_activated)
+        self.menuitem5.connect('activate', self.on_descargar_activated)
         self.menu_emergente.append(self.menuitem5)
-        self.menuitem6 = Gtk.MenuItem.new_with_label(_('Copy link to clipboard'))
-        self.menuitem6.connect('activate',self.on_menuitem6_activated)
+        self.menuitem6 = Gtk.MenuItem.new_with_label(_(
+            'Copy link to clipboard'))
+        self.menuitem6.connect('activate', self.on_menuitem6_activated)
         self.menu_emergente.append(self.menuitem6)
-        self.menuitem7 = Gtk.MenuItem.new_with_label(_('Copy thumbnail 72x72 link to clipboard'))
-        self.menuitem7.connect('activate',self.on_menuitem7_activated)
+        self.menuitem7 = Gtk.MenuItem.new_with_label(_(
+            'Copy thumbnail 72x72 link to clipboard'))
+        self.menuitem7.connect('activate', self.on_menuitem7_activated)
         self.menu_emergente.append(self.menuitem7)
-        self.menuitem8 = Gtk.MenuItem.new_with_label(_('Copy thumbnail 144x144 link to clipboard'))
-        self.menuitem8.connect('activate',self.on_menuitem8_activated)
+        self.menuitem8 = Gtk.MenuItem.new_with_label(_(
+            'Copy thumbnail 144x144 link to clipboard'))
+        self.menuitem8.connect('activate', self.on_menuitem8_activated)
         self.menu_emergente.append(self.menuitem8)
-        self.menuitem9 = Gtk.MenuItem.new_with_label(_('Copy thumbnail 288x288 link to clipboard'))
-        self.menuitem9.connect('activate',self.on_menuitem9_activated)
+        self.menuitem9 = Gtk.MenuItem.new_with_label(_(
+            'Copy thumbnail 288x288 link to clipboard'))
+        self.menuitem9.connect('activate', self.on_menuitem9_activated)
         self.menu_emergente.append(self.menuitem9)
         self.menuitem10 = Gtk.MenuItem.new_with_label(_('Copy link for web'))
-        self.menuitem10.connect('activate',self.on_menuitem10_activated)
+        self.menuitem10.connect('activate', self.on_menuitem10_activated)
         self.menu_emergente.append(self.menuitem10)
         self.menuitem11 = Gtk.MenuItem.new_with_label(_('Copy image'))
-        self.menuitem11.connect('activate',self.on_menuitem11_activated)
+        self.menuitem11.connect('activate', self.on_menuitem11_activated)
         self.menu_emergente.append(self.menuitem11)
         self.menuitem12 = Gtk.MenuItem.new_with_label(_('Paste image'))
-        self.menuitem12.connect('activate',self.on_menuitem12_activated)
+        self.menuitem12.connect('activate', self.on_menuitem12_activated)
         self.menu_emergente.append(self.menuitem12)
         #
         self.menuitem3.set_visible(True)
@@ -324,8 +342,12 @@ class MainWindow (Gtk.ApplicationWindow):
         self.menuitem11.set_visible(True)
         self.menuitem12.set_visible(True)
         #
-        self.store = Gtk.ListStore(GdkPixbuf.Pixbuf,str,GObject.TYPE_PYOBJECT)
-        self.storeimages = Gtk.ListStore(GdkPixbuf.Pixbuf,str,GObject.TYPE_PYOBJECT)
+        self.store = Gtk.ListStore(GdkPixbuf.Pixbuf,
+                                   str,
+                                   GObject.TYPE_PYOBJECT)
+        self.storeimages = Gtk.ListStore(GdkPixbuf.Pixbuf,
+                                         str,
+                                         GObject.TYPE_PYOBJECT)
         self.iconview1.set_model(self.store)
         self.iconview1.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
         self.iconview1.set_pixbuf_column(0)
@@ -337,20 +359,30 @@ class MainWindow (Gtk.ApplicationWindow):
         self.iconview1.set_row_spacing(20)
         self.iconview1.set_item_padding(0)
         ################################################################
-        self.iconview1.connect('button-press-event',self.on_iconview1_button_press_event)
-        self.iconview1.connect('button-release-event',self.on_iconview1_button_release_event)
+        self.iconview1.connect('button-press-event',
+                               self.on_iconview1_button_press_event)
+        self.iconview1.connect('button-release-event',
+                               self.on_iconview1_button_release_event)
 
-        self.iconview1.connect('key-release-event',self.on_iconview1_key_release_event)
+        self.iconview1.connect('key-release-event',
+                               self.on_iconview1_key_release_event)
         # set icon for drag operation
         self.iconview1.connect('drag-begin', self.drag_begin)
         self.iconview1.connect('drag-data-get', self.drag_data_get_data)
-        self.iconview1.connect('drag-data-received',self.drag_data_received)
+        self.iconview1.connect('drag-data-received', self.drag_data_received)
         #
-        dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, 100),Gtk.TargetEntry.new('text/plain', 0, 80)]
-        self.iconview1.drag_source_set(Gdk.ModifierType.BUTTON1_MASK, dnd_list, Gdk.DragAction.COPY)
+        dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, 100),
+                    Gtk.TargetEntry.new('text/plain', 0, 80)]
+        self.iconview1.drag_source_set(Gdk.ModifierType.BUTTON1_MASK,
+                                       dnd_list,
+                                       Gdk.DragAction.COPY)
         self.iconview1.drag_source_add_uri_targets()
         dnd_list = Gtk.TargetEntry.new("text/uri-list", 0, 0)
-        self.iconview1.drag_dest_set(Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP,[dnd_list],Gdk.DragAction.MOVE )
+        self.iconview1.drag_dest_set(Gtk.DestDefaults.MOTION |
+                                     Gtk.DestDefaults.HIGHLIGHT |
+                                     Gtk.DestDefaults.DROP,
+                                     [dnd_list],
+                                     Gdk.DragAction.MOVE)
         self.iconview1.drag_dest_add_uri_targets()
         #
         self.album = None
@@ -362,79 +394,80 @@ class MainWindow (Gtk.ApplicationWindow):
         self.inicia_albums()
         self.set_normal_cursor()
 
-
-    def increase(self):
-        self.progress_bar_value+=1.0
-        fraction=self.progress_bar_value/self.progress_bar_max_value
-        self.progressbar.set_fraction(fraction)
-        while Gtk.events_pending():
-            Gtk.main_iteration()
-        if self.progress_bar_value==self.progress_bar_max_value:
-            self.progressbar.hide()
-
     def drag_begin(self, widget, context):
-        if self.album is not  None:
+        if self.album is not None:
             items = self.iconview1.get_selected_items()
-            if len(items)>0:
-                selected=self.storeimages.get_iter_from_string(str(items[0]))
-                pixbuf = self.storeimages.get_value(selected,0)
+            if len(items) > 0:
+                selected = self.storeimages.get_iter_from_string(str(items[0]))
+                pixbuf = self.storeimages.get_value(selected, 0)
                 Gtk.drag_set_icon_pixbuf(context, pixbuf, -2, -2)
 
-    def drag_data_get_data(self, treeview, context, selection, target_id, etime):
+    def drag_data_get_data(self, treeview, context, selection, target_id,
+                           etime):
         if target_id == 0:
-            if self.album != None:
+            if self.album is not None:
                 items = self.iconview1.get_selected_items()
                 files = []
-                if len(items)>0:
-                    selected=self.storeimages.get_iter_from_string(str(items[0]))
-                    imagen=self.storeimages.get_value(selected,2)
-                    if imagen.params['url'].rfind('/')>-1:
+                if len(items) > 0:
+                    selected = self.storeimages.get_iter_from_string(
+                        str(items[0]))
+                    imagen = self.storeimages.get_value(selected, 2)
+                    if imagen.params['url'].rfind('/') > -1:
                         ext = imagen.params['url'][-4:]
-                        name = self.storeimages.get_value(selected,1)
+                        name = self.storeimages.get_value(selected, 1)
                         if name[-4:] != ext:
-                            name =name+ext
-                        filename = tempfile.mkstemp(suffix = '',prefix='picapy_tmp', dir='/tmp')[1]
-                        utils.download_image(imagen.params['url'],filename)
-                        #
+                            name = name+ext
+                        filename = tempfile.mkstemp(suffix='',
+                                                    prefix='picapy_tmp',
+                                                    dir='/tmp')[1]
+                        utils.download_image(imagen.params['url'], filename)
                         if os.path.exists(filename):
-                            newname = os.path.join('/tmp',name)
-                            os.rename(filename,newname)
+                            newname = os.path.join('/tmp', name)
+                            os.rename(filename, newname)
                             if os.path.exists(filename):
                                 os.remove(filename)
                         location = "file://" + newname
                         files.append(location)
                         selection.set_uris(files)
 
-    def drag_data_received(self, widget, drag_context, x, y, selection_data, info, timestamp):
-        if self.album!=None:
+    def drag_data_received(self, widget, drag_context, x, y, selection_data,
+                           info, timestamp):
+        if self.album is not None:
             filenames = selection_data.get_uris()
             for_upload = []
             for filename in filenames:
-                if len(filename)>8:
+                if len(filename) > 8:
                     filename = urllib.request.url2pathname(filename)
                     filename = filename[7:]
                     mime = mimetypes.guess_type(filename)
                     if os.path.exists(filename):
                         mime = mimetypes.guess_type(filename)[0]
-                        if mime in googlepicasaapi.SUPPORTED_MIMES or mime in googlepicasaapi.CONVERTED_MIMES:
+                        if mime in googlepicasaapi.SUPPORTED_MIMES or\
+                                mime in googlepicasaapi.CONVERTED_MIMES:
                             for_upload.append(filename)
-            if len(for_upload)>0:
+            if len(for_upload) > 0:
                 self.set_wait_cursor()
-                jobs = []
-                with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
-                    for filename in for_upload:
-                        job = executor.submit(utils.upload_an_image, self.picasa, self.reduce_size, self.max_size, self.reduce_colors, self.album.params['id'], filename, os.path.basename(filename), None)
-                        jobs.append(job)
-                results = []
-                for job in concurrent.futures.as_completed(jobs):
-                    results.append(job.result())
-                sorted(results, key=lambda element: element['index'])
-                for element in results:
-                    self.storeimages.prepend([element['pixbuf'],element['photo_name'],element['photo']])
+                progreso = Progreso('Picapy', self, len(for_upload))
+                tasker = Tasker(utils.upload_an_image2, for_upload,
+                                self.picasa, self.reduce_size, self.max_size,
+                                self.reduce_colors, self.album.params['id'])
+                progreso.connect('i-want-stop', tasker.stopit)
+                tasker.connect('start-one-element',
+                               self.uploading,
+                               progreso)
+                tasker.connect('end-one-element', progreso.increase)
+                tasker.connect('end-one-element', self.show_photo)
+                tasker.start()
+                progreso.run()
                 self.set_normal_cursor()
-                while Gtk.events_pending():
-                    Gtk.main_iteration()
         return True
+
+    def show_photo(self, emiter, photo):
+        if photo is not None and self.album is not None:
+            if self.album.params['id'] == photo['album_id']:
+                self.storeimages.prepend([photo['pixbuf'],
+                                          photo['photo_name'],
+                                          photo['photo']])
 
     def load_preferences(self):
         configuration = Configuration()
@@ -884,18 +917,20 @@ class MainWindow (Gtk.ApplicationWindow):
             if self.album is None:
                 items = self.iconview1.get_selected_items()
                 if len(items) > 0:
-                    selected=self.store.get_iter_from_string(str(items[0]))
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
+                    selected = self.store.get_iter_from_string(str(items[0]))
+                    self.set_wait_cursor()
                     while Gtk.events_pending():
                         Gtk.main_iteration()
-                    self.load_images_from_picasa_album(self.store.get_value(selected,2))
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
+                    self.load_images_from_picasa_album(
+                        self.store.get_value(selected, 2))
+                    self.set_normal_cursor()
             else:
                 items = self.iconview1.get_selected_items()
-                if len(items)>0:
-                    selected=self.storeimages.get_iter_from_string(str(items[0]))
-                    image=self.storeimages.get_value(selected,2)
-                    v = VerImagen(self,image)
+                if len(items) > 0:
+                    selected = self.storeimages.get_iter_from_string(
+                        str(items[0]))
+                    image = self.storeimages.get_value(selected, 2)
+                    v = VerImagen(self, image)
                     v.run()
                     v.destroy()
 
@@ -944,33 +979,35 @@ class MainWindow (Gtk.ApplicationWindow):
         values.append(Gdk.keyval_from_name('KP_Enter'))
         values.append(Gdk.keyval_from_name('space'))
         if event.keyval in values:
-            if self.album==None:
+            if self.album is None:
                 items = self.iconview1.get_selected_items()
-                if len(items)>0:
-                    selected=self.store.get_iter_from_string(str(items[0]))
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
-                    while Gtk.events_pending():
-                        Gtk.main_iteration()
-                    self.load_images_from_picasa_album(self.store.get_value(selected,2))
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
+                if len(items) > 0:
+                    selected = self.store.get_iter_from_string(str(items[0]))
+                    self.set_wait_cursor()
+                    self.load_images_from_picasa_album(
+                        self.store.get_value(selected, 2))
+                    self.set_normal_cursor()
             else:
                 items = self.iconview1.get_selected_items()
-                if len(items)>0:
-                    selected=self.storeimages.get_iter_from_string(str(items[0]))
-                    image=self.storeimages.get_value(selected,2)
-                    v = VerImagen(self,image)
+                if len(items) > 0:
+                    selected = self.storeimages.get_iter_from_string(
+                        str(items[0]))
+                    image = self.storeimages.get_value(selected, 2)
+                    v = VerImagen(self, image)
                     v.run()
                     v.destroy()
         elif event.keyval == Gdk.keyval_from_name('BackSpace'):
-            if self.album != None:
+            if self.album is not None:
                 self.iconview1.set_model(self.store)
                 self.iconview1.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
                 self.button_up.set_sensitive(False)
                 self.button_slideshow.set_sensitive(False)
-                self.album=None
+                self.album = None
                 self.set_title('Picapy')
+        elif event.keyval == Gdk.keyval_from_name('Delete'):
+            self.on_remove_button_clicked(None)
 
-    def load_images_from_picasa_album(self,album):
+    def load_images_from_picasa_album(self, album):
         self.set_title('Picapy | ' + album.params['title'])
         mdir = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id'])
         if not os.path.exists(mdir):
@@ -978,50 +1015,78 @@ class MainWindow (Gtk.ApplicationWindow):
         data_file = os.path.join(mdir, 'photo.data')
         data = None
         if os.path.exists(data_file):
-            f=codecs.open(data_file, 'r', 'utf-8')
+            f = codecs.open(data_file, 'r', 'utf-8')
             data = json.loads(f.read())
             f.close()
-        photos=self.picasa.get_photos(album.params['id'])
+        photos = self.picasa.get_photos(album.params['id'])
         self.storeimages.clear()
         self.iconview1.set_model(self.storeimages)
         self.iconview1.show()
-        while Gtk.events_pending():
-            Gtk.main_iteration()
         self.iconview1.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
         if len(photos) > 0:
             results = []
             to_json = {}
             photos.sort()
-            with concurrent.futures.ProcessPoolExecutor(max_workers=NUM_THREADS) as executor:
-                for photo in photos:
-                    to_json[photo.params['id']] = photo.params
-                    if data is None or\
-                            (photo.params['id'] not in data.keys()) or\
-                            (data[photo.params['id']]['etag'] !=
-                             photo.params['etag']):
-                        executor.submit(utils.create_icon_for_photo,
-                                        album.params['id'],
-                                        photo)
+            for photo in photos:
+                to_json[photo.params['id']] = photo.params
             mdir = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id'])
             if not os.path.exists(mdir):
                 os.makedirs(mdir)
-            for photo in photos:
-                photo_name = photo.params['title']
-                mfile = os.path.join(mdir, 'photo_'+photo.params['id']+'.png')
-                if os.path.exists(mfile):
-                    pixbuf = utils.get_pixbuf_from_url('file://'+mfile)
-                else:
-                    pixbuf = PIXBUF_DEFAULT_PHOTO
-                self.storeimages.append([pixbuf,photo.params['title'],photo])
             f = open(data_file, 'w')
             f.write(json.dumps(to_json))
             f.close()
+
+            self.set_wait_cursor()
+            progreso = Progreso('Picapy', self, len(photos))
+            tasker = Tasker(self.get_photo_and_create_icon, photos,
+                            album, data)
+            progreso.connect('i-want-stop', tasker.stopit)
+            tasker.connect('start-one-element',
+                           self.getting_thumbnail,
+                           progreso)
+            tasker.connect('end-one-element', progreso.increase)
+            tasker.connect('end-one-element', self.load_thumbnail, mdir)
+            tasker.connect('finished', progreso.close)
+            tasker.start()
+            progreso.run()
+            self.set_normal_cursor()
+
         self.album = album
         self.button_add.set_tooltip_text(_('Add image'))
         self.button_remove.set_tooltip_text(_('Remove image'))
         self.button_up.set_sensitive(True)
         self.button_slideshow.set_sensitive(True)
         self.button_download.set_sensitive(True)
+
+    def getting_thumbnail(self, emiter, photo, progreso):
+        print(emiter, photo, progreso)
+        name = photo.params['title']
+        if len(name) > 35:
+            name = name[:32] + '...'
+        label = _('Getting') + ' ' + name
+        progreso.set_label(name)
+
+    def get_photo_and_create_icon(self, photo, album, data):
+        mdir = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id'])
+        if not os.path.exists(mdir):
+            os.makedirs(mdir)
+        mfile = os.path.join(mdir, 'photo_'+photo.params['id']+'.png')
+        if os.path.exists(mfile) is False:
+            utils.create_icon_for_photo(album.params['id'], photo)
+        elif data is not None and (photo.params['id'] not in data.keys()) or\
+                (data[photo.params['id']]['etag'] != photo.params['etag']):
+            utils.create_icon_for_photo(album.params['id'], photo)
+        return photo
+
+    def load_thumbnail(self, emiter, photo, mdir):
+        print(emiter, photo, mdir)
+        photo_name = photo.params['title']
+        mfile = os.path.join(mdir, 'photo_'+photo.params['id']+'.png')
+        if os.path.exists(mfile):
+            pixbuf = utils.get_pixbuf_from_url('file://'+mfile)
+        else:
+            pixbuf = PIXBUF_DEFAULT_PHOTO
+        self.storeimages.append([pixbuf, photo.params['title'], photo])
 
     def on_button1_clicked(self, widget):
         self.iconview1.set_model(self.store)
@@ -1036,23 +1101,25 @@ class MainWindow (Gtk.ApplicationWindow):
     def on_remove_button_clicked(self, widget):
         if self.album is None:
             items = self.iconview1.get_selected_items()
-            if len(items)>0:
-                if len(items)>1:
-                    msg = _('Do you want to delete %s folders?') % str(len(items))
+            if len(items) > 0:
+                if len(items) > 1:
+                    msg = _('Do you want to delete %s folders?') % str(len(
+                        items))
                     msg2 = _('Deleting folders...')
                 else:
                     msg = _('Do you want to delete this folder?')
                     msg2 = _('Deleting folder...')
                 md = Gtk.MessageDialog(self,
-                Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION,
-                Gtk.ButtonsType.OK_CANCEL, msg)
-                respuesta=md.run()
+                                       Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                       Gtk.MessageType.QUESTION,
+                                       Gtk.ButtonsType.OK_CANCEL, msg)
+                respuesta = md.run()
                 if respuesta == Gtk.ResponseType.OK:
                     md.destroy()
-                    p=Progreso(msg2,self,len(items))
+                    p = Progreso(msg2, self, len(items))
                     for item in items:
                         itera = self.store.get_iter_from_string(str(item))
-                        selected=self.store.get_value(itera,2)
+                        selected = self.store.get_value(itera, 2)
                         if self.picasa.delete_album(selected):
                             self.store.remove(itera)
                         p.increase()
@@ -1061,31 +1128,58 @@ class MainWindow (Gtk.ApplicationWindow):
                     md.destroy()
         else:
             items = self.iconview1.get_selected_items()
-            if len(items)>0:
-                if len(items)>1:
-                    msg = _('Do you want to delete %s images?') % str(len(items))
+            if len(items) > 0:
+                if len(items) > 1:
+                    msg = _('Do you want to delete %s images?') % str(len(
+                        items))
                     msg2 = _('Deleting images...')
                 else:
                     msg = _('Do you want to delete this image?')
                     msg2 = _('Deleting image...')
                 md = Gtk.MessageDialog(self,
-                Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION,
-                Gtk.ButtonsType.OK_CANCEL, msg)
-                respuesta=md.run()
+                                       Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                       Gtk.MessageType.QUESTION,
+                                       Gtk.ButtonsType.OK_CANCEL, msg)
+                respuesta = md.run()
                 if respuesta == Gtk.ResponseType.OK:
                     md.destroy()
-                    p=Progreso(msg2,self,len(items))
+                    self.set_wait_cursor()
+                    progreso = Progreso(msg2, self, len(items))
+                    iters = []
                     for item in items:
-                        itera = self.storeimages.get_iter_from_string(str(item))
-                        selected=self.storeimages.get_value(itera,2)
-                        if self.picasa.delete_photo(self.album,selected):
-                            self.storeimages.remove(itera)
-                        p.increase()
-                    p.destroy()
+                        iters.append(self.storeimages.get_iter(item))
+                    tasker = Tasker(utils.remove_an_image, iters, self.picasa,
+                                    self.storeimages, self.album)
+                    progreso.connect('i-want-stop', tasker.stopit)
+                    tasker.connect('start-one-element',
+                                   self.removing,
+                                   progreso)
+                    tasker.connect('end-one-element', progreso.increase)
+                    tasker.connect('end-one-element',
+                                   self.remove_photo,
+                                   self.album)
+                    tasker.connect('finished', progreso.close)
+                    tasker.start()
+                    progreso.run()
+                    self.set_normal_cursor()
                 else:
                     md.destroy()
 
-    def update_preview_cb(self,file_chooser, preview):
+    def removing(self, emiter, iter, progreso):
+        print(emiter, iter, progreso)
+        if iter is not None:
+            name = self.storeimages.get_value(iter, 1)
+            if len(name) > 35:
+                name = name[:32] + '...'
+            label = _('Removing') + ' ' + name
+            progreso.set_label(label)
+
+    def remove_photo(self, emiter, iter, album):
+        if iter is not None and self.album is not None:
+            if self.album.params['id'] == album.params['id']:
+                self.storeimages.remove(iter)
+
+    def update_preview_cb(self, file_chooser, preview):
         filename = file_chooser.get_preview_filename()
         try:
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, 128, 128)
@@ -1100,7 +1194,7 @@ class MainWindow (Gtk.ApplicationWindow):
         if self.album is None:
             n = NuevoAlbum(self)
             if n.run() == Gtk.ResponseType.ACCEPT:
-                title = n.utils.get_album()
+                title = n.get_album()
                 summary = n.get_commentary()
                 access = n.get_access()
                 if len(title) > 0:
@@ -1146,24 +1240,39 @@ class MainWindow (Gtk.ApplicationWindow):
             if response == Gtk.ResponseType.OK:
                 filenames = dialog.get_filenames()
                 self.image_dir = os.path.dirname(filenames[0])
-                if self.image_dir is None or len(self.image_dir)<=0 or not os.path.exists(self.image_dir):
+                if self.image_dir is None or len(self.image_dir) <= 0 or\
+                        not os.path.exists(self.image_dir):
                     self.image_dir = os.getenv('HOME')
                 dialog.destroy()
-                if len(filenames)>0:
+                if len(filenames) > 0:
                     self.set_wait_cursor()
-                    results = []
-                    with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
-                        for filename in filenames:
-                            ans = executor.submit(utils.upload_an_image, self.picasa, self.reduce_size, self.max_size, self.reduce_colors, self.album.params['id'], filename, os.path.basename(filename), None)
-                            results.append(ans.result())
-                    if len(results)>0:
-                        sorted(results, key=lambda element: element['index'])
-                        for element in results:
-                            self.storeimages.prepend([element['pixbuf'],element['photo_name'],element['photo']])
+                    progreso = Progreso('Picapy', self, len(filenames))
+                    tasker = Tasker(utils.upload_an_image2, filenames,
+                                    self.picasa, self.reduce_size,
+                                    self.max_size,
+                                    self.reduce_colors,
+                                    self.album.params['id'])
+                    progreso.connect('i-want-stop', tasker.stopit)
+                    tasker.connect('start-one-element',
+                                   self.uploading,
+                                   progreso)
+                    tasker.connect('end-one-element', progreso.increase)
+                    tasker.connect('end-one-element', self.show_photo)
+                    tasker.connect('finished', progreso.close)
+                    tasker.start()
+                    progreso.run()
                     self.set_normal_cursor()
-                    while Gtk.events_pending():
-                        Gtk.main_iteration()
             dialog.destroy()
+
+    def uploading(self, emiter, filename, progreso):
+        print(emiter, filename, progreso)
+        filename = os.path.basename(filename)
+        if len(filename) > 35:
+            filename = '...' + filename[:-32]
+        label = _('Uploading') + ' ' + filename
+        progreso.set_label(label)
+
+
 if __name__ == '__main__':
     v = MainWindow(None)
     Gtk.main()

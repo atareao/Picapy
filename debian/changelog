@@ -1,3 +1,10 @@
+picapy (2.3.0-0extras16.04.0) xenial; urgency=medium
+
+  * Tasker
+  * Emitting
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 18 Sep 2016 22:38:23 +0200
+
 picapy (2.2.0-0extras16.04.1) xenial; urgency=medium
 
   * Improved UI:
