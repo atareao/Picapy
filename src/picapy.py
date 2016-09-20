@@ -93,24 +93,24 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'goto_homepage',
             callback=lambda x, y: webbrowser.open(
-                'http://www.atareao.es/apps/\
-crear-un-gif-animado-de-un-video-en-ubuntu-en-un-solo-clic/')))
+                'https://www.atareao.es/apps/\
+picapy-gestionar-google-photos-ubuntu/')))
         self.add_action(create_action(
             'goto_bug',
             callback=lambda x, y: webbrowser.open(
-                    'https://bugs.launchpad.net/2gif')))
+                    'https://bugs.launchpad.net/picapy')))
         self.add_action(create_action(
             'goto_sugestion',
             callback=lambda x, y: webbrowser.open(
-                    'https://blueprints.launchpad.net/2gif')))
+                    'https://blueprints.launchpad.net/picapy')))
         self.add_action(create_action(
             'goto_translation',
             callback=lambda x, y: webbrowser.open(
-                    'https://translations.launchpad.net/2gif')))
+                    'https://translations.launchpad.net/picapy')))
         self.add_action(create_action(
             'goto_questions',
             callback=lambda x, y: webbrowser.open(
-                    'https://answers.launchpad.net/2gif')))
+                    'https://answers.launchpad.net/picapy')))
         self.add_action(create_action(
             'goto_twitter',
             callback=lambda x, y: webbrowser.open(
@@ -172,8 +172,8 @@ crear-un-gif-animado-de-un-video-en-ubuntu-en-un-solo-clic/')))
         about_dialog.set_name(comun.APPNAME)
         about_dialog.set_version(comun.VERSION)
         about_dialog.set_copyright(
-            'Copyrignt (c) 2015-2016\nLorenzo Carbonell Cerezo')
-        about_dialog.set_comments(_('An app to convert video to gif'))
+            'Copyrignt (c) 2010-2016\nLorenzo Carbonell Cerezo')
+        about_dialog.set_comments(_('A client for Google Photos'))
         about_dialog.set_license('''
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

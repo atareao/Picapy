@@ -78,14 +78,7 @@ DEFAULT_ALBUM = os.path.join(IMGDIR, 'default_album.svg')
 DEFAULT_PHOTO = os.path.join(IMGDIR, 'default_photo.svg')
 
 
-try:
-    current_locale, encoding = locale.getdefaultlocale()
-    language = gettext.translation(APP, LANGDIR, [current_locale])
-    language.install()
-    if sys.version_info[0] == 3:
-        _ = language.gettext
-    else:
-        _ = language.ugettext
-except Exception as e:
-    print(e)
-    _ = str
+locale.setlocale(locale.LC_ALL, '')
+gettext.bindtextdomain(APP, LANGDIR)
+gettext.textdomain(APP)
+_ = gettext.gettext

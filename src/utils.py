@@ -41,6 +41,7 @@ import cairo
 
 
 def download_image(url_image, filename):
+    print(url_image, filename)
     opener1 = urllib.request.build_opener()
     page1 = opener1.open(url_image)
     my_picture = page1.read()

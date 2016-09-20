@@ -477,36 +477,10 @@ it, do you want to authorize?'))
         self.reduce_colors = configuration.get('reduce_colors')
         self.image_dir = configuration.get('image_dir')
         self.time_between_images = configuration.get('time_between_images')
-        if self.image_dir is None or len(self.image_dir)<=0 or os.path.exists(self.image_dir)==False:
+        if self.image_dir is None or len(self.image_dir) <= 0 or\
+                os.path.exists(self.image_dir) is False:
             self.image_dir = os.getenv('HOME')
         self.first_time = configuration.get('first_time')
-
-    def get_help_menu(self):
-        help_menu =Gtk.Menu()
-        #
-        utils.add2menu(help_menu,text = _('Web...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://launchpad.net/picapy'))
-        utils.add2menu(help_menu,text = _('Get help online...'),conector_event = 'activate',conector_action = lambda x:webbrowser.open('https://answers.launchpad.net/picapy'))
-        utils.add2menu(help_menu,text = _('Translate this application...'),conector_event = 'activate',conector_action =lambda x:webbrowser.open('https://translations.launchpad.net/picapy'))
-        utils.add2menu(help_menu,text = _('Report a bug...'),conector_event = 'activate',conector_action = lambda x:webbrowser.open('https://bugs.launchpad.net/picapy'))
-        utils.add2menu(help_menu)
-        web = utils.add2menu(help_menu,text = _('Homepage'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('http://www.atareao.es/tag/picapy'))
-        twitter = utils.add2menu(help_menu,text = _('Follow us in Twitter'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://twitter.com/atareao'))
-        googleplus = utils.add2menu(help_menu,text = _('Follow us in Google+'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://plus.google.com/118214486317320563625/posts'))
-        facebook = utils.add2menu(help_menu,text = _('Follow us in Facebook'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('http://www.facebook.com/elatareao'))
-        utils.add2menu(help_menu)
-        utils.add2menu(help_menu,text = _('About'),conector_event = 'activate',conector_action = self.on_about_activate)
-        #
-        web.set_image(Gtk.Image.new_from_file(os.path.join(comun.IMGDIR, 'web.svg')))
-        web.set_always_show_image(True)
-        twitter.set_image(Gtk.Image.new_from_file(os.path.join(comun.IMGDIR, 'twitter.svg')))
-        twitter.set_always_show_image(True)
-        googleplus.set_image(Gtk.Image.new_from_file(os.path.join(comun.IMGDIR, 'googleplus.svg')))
-        googleplus.set_always_show_image(True)
-        facebook.set_image(Gtk.Image.new_from_file(os.path.join(comun.IMGDIR, 'facebook.svg')))
-        facebook.set_always_show_image(True)
-        #
-        help_menu.show()
-        return help_menu
 
     def inicia_images(self):
         modelo = Gtk.ListStore(str)
@@ -558,31 +532,63 @@ it, do you want to authorize?'))
         self.albums = self.picasa.get_albums()
         if len(self.albums) > 0:
             to_json = {}
-            with concurrent.futures.ProcessPoolExecutor(max_workers=NUM_THREADS) as executor:
-                for album in self.albums:
-                    to_json[album.params['id']]=album.params
-                    if data is None or album.params['id'] not in data.keys() or (data[album.params['id']]['etag'] != album.params['etag']):
-                        executor.submit(utils.create_icon_for_album,album)
             for album in self.albums:
-                mfile = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id']+'.png')
-                if os.path.exists(mfile):
-                    pixbuf = utils.get_pixbuf_from_url('file://'+mfile)
-                else:
-                    pixbuf = PIXBUF_DEFAULT_ALBUM
-                self.store.append([pixbuf,album.params['title'],album])
-            while Gtk.events_pending():
-                Gtk.main_iteration()
-            f=open(data_file, 'w')
+                to_json[album.params['id']] = album.params
+            f = open(data_file, 'w')
             f.write(json.dumps(to_json))
             f.close()
+            self.set_wait_cursor()
+            progreso = Progreso(_('Loading albums')+'...',
+                                self,
+                                len(self.albums))
+            tasker = Tasker(self.get_album_and_create_icon, self.albums,
+                            data)
+            progreso.connect('i-want-stop', tasker.stopit)
+            tasker.connect('start-one-element',
+                           self.getting_thumbnail_for_album,
+                           progreso)
+            tasker.connect('end-one-element', progreso.increase)
+            tasker.connect('end-one-element',
+                           self.load_thumbnail_for_album)
+            tasker.connect('finished', progreso.close)
+            tasker.start()
+            progreso.run()
+            self.set_normal_cursor()
+
+    def get_album_and_create_icon(self, album, data):
+        mfile = os.path.join(comun.IMAGES_DIR,
+                             'album_'+album.params['id']+'.png')
+        if os.path.exists(mfile) is False or data is None or\
+                album.params['id'] not in data.keys() or\
+                (data[album.params['id']]['etag'] != album.params['etag']):
+            utils.create_icon_for_album(album)
+        else:
+            pixbuf = utils.get_pixbuf_from_url('file://'+mfile)
+        return album
+
+    def getting_thumbnail_for_album(self, emiter, album, progreso):
+        name = album.params['title']
+        if len(name) > 35:
+            name = name[:32] + '...'
+        label = _('Getting') + ' ' + name
+        progreso.set_label(name)
+
+    def load_thumbnail_for_album(self, emiter, album):
+        mfile = os.path.join(comun.IMAGES_DIR,
+                             'album_'+album.params['id']+'.png')
+        if os.path.exists(mfile):
+            pixbuf = utils.get_pixbuf_from_url('file://'+mfile)
+        else:
+            pixbuf = PIXBUF_DEFAULT_ALBUM
+        self.store.append([pixbuf, album.params['title'], album])
 
     def on_edit_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            if self.album==None:
-                selected=self.store.get_iter_from_string(str(items[0]))
-                album = self.store.get_value(selected,2)
-                i=EditAlbum(self,album)
+        if len(items) > 0:
+            if self.album is None:
+                selected = self.store.get_iter_from_string(str(items[0]))
+                album = self.store.get_value(selected, 2)
+                i = EditAlbum(self, album)
                 if i.run() == Gtk.ResponseType.ACCEPT:
                     album.params['title'] = i.entry1.get_text()
                     album.params['summary'] = i.entry2.get_text()
@@ -594,17 +600,22 @@ it, do you want to authorize?'))
                         album.params['rights'] = 'public'
                     updated_album = self.picasa.edit_album(album)
                     if updated_album is not None:
-                        album_name=album.params['title']
-                        mfile = os.path.join(comun.IMAGES_DIR, 'album_'+album.params['id']+'.png')
+                        album_name = album.params['title']
+                        mfile = os.path.join(
+                            comun.IMAGES_DIR,
+                            'album_'+album.params['id']+'.png')
                         os.remove(mfile)
-                        utils.create_icon(mfile,updated_album.params['thumbnail2'],updated_album.params['access'])
+                        utils.create_icon(mfile,
+                                          updated_album.params['thumbnail2'],
+                                          updated_album.params['access'])
                         if os.path.exists(mfile):
                             pixbuf = GdkPixbuf.Pixbuf.new_from_file(mfile)
                         else:
                             pixbuf = PIXBUF_DEFAULT_ALBUM
-                        self.store.set_value(selected,0,pixbuf)
-                        self.store.set_value(selected,1,updated_album.params['title'])
-                        self.store.set_value(selected,2,updated_album)
+                        self.store.set_value(selected, 0, pixbuf)
+                        self.store.set_value(selected, 1,
+                                             updated_album.params['title'])
+                        self.store.set_value(selected, 2, updated_album)
                     '''
                     self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
                     self.inicia_albums()
@@ -636,15 +647,16 @@ it, do you want to authorize?'))
 
     def on_informacion_activated(self, widget):
         items = self.iconview1.get_selected_items()
-        if len(items)>0:
-            if self.album==None:
-                selected=self.store.get_iter_from_string(str(items[0]))
-                i=InformacionAlbum(self,self.store.get_value(selected,2))
+        if len(items) > 0:
+            if self.album is None:
+                selected = self.store.get_iter_from_string(str(items[0]))
+                i = InformacionAlbum(self, self.store.get_value(selected, 2))
                 i.run()
                 i.destroy()
             else:
-                selected=self.storeimages.get_iter_from_string(str(items[0]))
-                i=InformacionImagen(self,self.storeimages.get_value(selected,2))
+                selected = self.storeimages.get_iter_from_string(str(items[0]))
+                i = InformacionImagen(self,
+                                      self.storeimages.get_value(selected, 2))
                 i.run()
                 i.destroy()
 
@@ -700,7 +712,7 @@ it, do you want to authorize?'))
             else:
                 itera = self.storeimages.get_iter_first()
                 while(itera):
-                    image = self.storeimages.get_value(itera,2)
+                    image = self.storeimages.get_value(itera, 2)
                     images.append(image)
                     itera = self.storeimages.iter_next(itera)
             sw = SliderWindow(images, self.time_between_images)
@@ -1037,7 +1049,8 @@ it, do you want to authorize?'))
             f.close()
 
             self.set_wait_cursor()
-            progreso = Progreso('Picapy', self, len(photos))
+            progreso = Progreso(_('Loading images for album'),
+                                self, len(photos))
             tasker = Tasker(self.get_photo_and_create_icon, photos,
                             album, data)
             progreso.connect('i-want-stop', tasker.stopit)

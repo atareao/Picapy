@@ -20,63 +20,73 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import gi
+try:
+    gi.require_version('Gtk', '3.0')
+except Exception as e:
+    print(e)
+    exit(1)
 from gi.repository import Gtk
-import comun
-import locale
-import gettext
+from comun import _
 
-locale.setlocale(locale.LC_ALL, '')
-gettext.bindtextdomain(comun.APP, comun.LANGDIR)
-gettext.textdomain(comun.APP)
-_ = gettext.gettext
 
 class EditAlbum(Gtk.Dialog):
-    def __init__(self,parent,album):
+    def __init__(self, parent, album):
         #
         Gtk.Dialog.__init__(self)
         self.set_title(_('Edit Album'))
         self.set_modal(True)
-        self.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT)
+        self.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,
+                         Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT)
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
-        self.set_size_request(510,170)
+        self.set_size_request(510, 170)
         self.set_resizable(False)
         self.connect('destroy', self.close)
-        #
-        vbox = Gtk.VBox(spacing = 5)
+
+        vbox = Gtk.VBox(spacing=5)
         vbox.set_border_width(5)
         self.get_content_area().add(vbox)
-        #
+
         frame = Gtk.Frame()
-        vbox.pack_start(frame,True,True,0)
-        #
-        table = Gtk.Table(n_rows = 4, n_columns = 2, homogeneous = False)
+        vbox.pack_start(frame, True, True, 0)
+
+        table = Gtk.Table(n_rows=4, n_columns=2, homogeneous=False)
         table.set_border_width(5)
         table.set_col_spacings(5)
         table.set_row_spacings(5)
         frame.add(table)
         #
-        label1 = Gtk.Label.new(_('Title')+':')
-        label1.set_alignment(0,0.5)
-        table.attach(label1,0,1,0,1, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+        label1 = Gtk.Label.new(_('Title'))
+        label1.set_alignment(0, 0.5)
+        table.attach(label1, 0, 1, 0, 1,
+                     xoptions=Gtk.AttachOptions.FILL,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
         self.entry1 = Gtk.Entry()
         self.entry1.set_alignment(0)
         self.entry1.set_width_chars(50)
-        table.attach(self.entry1,1,2,0,1, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+        table.attach(self.entry1, 1, 2, 0, 1,
+                     xoptions=Gtk.AttachOptions.EXPAND,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
-        label2 = Gtk.Label.new(_('Summary')+':')
-        label2.set_alignment(0,0.5)
-        table.attach(label2,0,1,1,2, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+        label2 = Gtk.Label.new(_('Summary'))
+        label2.set_alignment(0, 0.5)
+        table.attach(label2, 0, 1, 1, 2,
+                     xoptions=Gtk.AttachOptions.FILL,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
         self.entry2 = Gtk.Entry()
         self.entry2.set_alignment(0)
         self.entry2.set_width_chars(50)
-        table.attach(self.entry2,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+        table.attach(self.entry2, 1, 2, 1, 2,
+                     xoptions=Gtk.AttachOptions.EXPAND,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
-        label3 = Gtk.Label.new(_('Access')+':')
-        label3.set_alignment(0,0.5)
-        table.attach(label3,0,1,2,3, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+        label3 = Gtk.Label.new(_('Access'))
+        label3.set_alignment(0, 0.5)
+        table.attach(label3, 0, 1, 2, 3,
+                     xoptions=Gtk.AttachOptions.FILL,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
         model = Gtk.ListStore(str)
         model.append([_('Private')])
@@ -85,26 +95,28 @@ class EditAlbum(Gtk.Dialog):
         self.combobox = Gtk.ComboBox()
         self.combobox.set_model(model)
         cell = Gtk.CellRendererText()
-        self.combobox.pack_start(cell,True);
-        self.combobox.add_attribute(cell,'text',0)
-        table.attach(self.combobox,1,2,2,3, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+        self.combobox.pack_start(cell, True)
+        self.combobox.add_attribute(cell, 'text', 0)
+        table.attach(self.combobox, 1, 2, 2, 3,
+                     xoptions=Gtk.AttachOptions.FILL,
+                     yoptions=Gtk.AttachOptions.SHRINK)
         #
-        if album != None:
-            self.entry1.set_text(album.params['title'] )
-            if album.params['summary'] != None:
-                self.entry2.set_text(album.params['summary'] )
-            if album.params['rights']  == 'public':
+        if album is not None:
+            self.entry1.set_text(album.params['title'])
+            if album.params['summary'] is not None:
+                self.entry2.set_text(album.params['summary'])
+            if album.params['rights'] == 'public':
                 self.combobox.set_active(2)
-            elif album.params['rights']  == 'protected':
+            elif album.params['rights'] == 'protected':
                 self.combobox.set_active(1)
-            elif album.params['rights']  == 'private':
+            elif album.params['rights'] == 'private':
                 self.combobox.set_active(0)
         #
         self.show_all()
 
-    def close(self,widget):
+    def close(self, widget):
         self.destroy()
 
 if __name__ == '__main__':
-    ia = EditAlbum(None,None)
+    ia = EditAlbum(None, None)
     ia.run()
