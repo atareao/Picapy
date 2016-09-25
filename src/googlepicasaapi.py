@@ -809,7 +809,7 @@ class Picasa(GoogleService):
         pixbuf.savev(temp, 'png', (), ())
         ans = self.edit_photo(album_id, photo, temp, filename, caption)
         if temp is not None and os.path.exists(temp):
-            # os.remove(temp)
+            os.remove(temp)
             pass
         return ans
 
