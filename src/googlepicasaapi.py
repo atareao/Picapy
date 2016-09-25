@@ -799,6 +799,20 @@ class Picasa(GoogleService):
             return self.edit_photo(album_id, photo, afile, filename, caption)
         return None
 
+    def edit_photo_from_pixbuf(self, album_id, photo, pixbuf, filename=None,
+                               caption=None):
+        temp = tempfile.mkstemp(suffix='.png',
+                                prefix='picapy_tmp',
+                                dir='/tmp')[1]
+        if temp is not None and os.path.exists(temp):
+            os.remove(temp)
+        pixbuf.savev(temp, 'png', (), ())
+        ans = self.edit_photo(album_id, photo, temp, filename, caption)
+        if temp is not None and os.path.exists(temp):
+            # os.remove(temp)
+            pass
+        return ans
+
     def edit_photo(self, album_id, photo, afile, filename=None, caption=None):
         mime = mimetypes.guess_type(afile)[0]
         content_type = ('Content-Type: %s' % (mime)).encode('utf-8')

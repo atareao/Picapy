@@ -4,9 +4,9 @@
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: picapy 2.2.0\n"
+"Project-Id-Version: picapy 2.3.2\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2016-09-11 09:43+0200\n"
+"POT-Creation-Date: 2016-09-25 20:59+0200\n"
 "PO-Revision-Date: 2012-10-30 22:21+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian translators\n"
@@ -17,113 +17,113 @@ msgstr ""
 "X-Generator: Launchpad (build 16567)\n"
 "X-Launchpad-Export-Date: 2013-04-20 07:16+0000\n"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:36
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:31
 msgid "Create new Album"
 msgstr "Направите нови албум"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:57
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:54
 #: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:59
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:83
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:61
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:66
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:61
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:82
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:57
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:65
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:60
 msgid "Title"
 msgstr "Назив"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:65
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:66
 msgid "Commentary"
 msgstr "Примедбе"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:73
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:77
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:84
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:78
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:85
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:91
 msgid "Access"
 msgstr "Приступ"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:78
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:82
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:85
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:92
 msgid "Private"
 msgstr "Приватно"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:79
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:83
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:100
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:86
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:93
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:111
 msgid "Protected"
 msgstr "Заштићено"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:80
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:84
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:98
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/nuevoalbum.py:87
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:94
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:109
 msgid "Public"
 msgstr "Јавно"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:38
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:37
 msgid "Edit Album"
 msgstr "Уреди албум"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:68
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editalbum.py:72
 #: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:70
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:71
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:74
 msgid "Summary"
 msgstr "Сажетак"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:37
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:285
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:37
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:32
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:301
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:32
 msgid "Information"
 msgstr "Информације"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:57
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:52
 msgid "Album"
 msgstr "Албум"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:66
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:57
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:65
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:52
 msgid "Id"
 msgstr "Ид"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:75
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:78
 msgid "Images"
 msgstr "Слике"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:102
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionalbum.py:113
 msgid "Only for users"
 msgstr "Само за кориснике"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:42
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:37
 msgid "Preferences"
 msgstr "Поставке"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:59
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:55
 msgid "Login"
 msgstr "Пријава"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:68
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:63
 msgid "Authorization"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:77
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:76
 msgid "Image link"
 msgstr "Веза слике"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:86
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/verimagen.py:39
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:85
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/verimagen.py:35
 msgid "Image"
 msgstr "Слика"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:89
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:92
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:95
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:98
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:88
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:91
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:94
 #: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:112
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:126
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:146
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:148
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:150
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:133
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:154
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:182
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:186
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:190
 msgid "Thumbnail"
 msgstr "Сличица"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:98
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:97
 msgid "Set image link:"
 msgstr "Подеси везу слике:"
 
@@ -131,286 +131,320 @@ msgstr "Подеси везу слике:"
 msgid "Optimization"
 msgstr "Оптимизација"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:119
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:120
 msgid "Reduce size to"
 msgstr "Умањи величину на"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:123
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:124
 msgid "pixels"
 msgstr "тачкица"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:126
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:128
 msgid "Gray scale"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:134
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:136
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:205
 msgid "Slideshow"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:142
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/preferences.py:144
 msgid "Time between images"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:127
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:639
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:139
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:693
 msgid "You have to authorize Picapy to use it, do you want to authorize?"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:146
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:159
 msgid "Exit"
 msgstr "Изађи"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:155
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:168
 msgid "Go to albums"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:165
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:357
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:654
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1047
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:178
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:391
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:709
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1164
 #, fuzzy
 msgid "Add album"
 msgstr "Албум"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:174
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:358
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:655
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1048
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:187
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:392
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:710
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1165
 #, fuzzy
 msgid "Remove album"
 msgstr "Уклони"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:202
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:459
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:196
+#, fuzzy
+msgid "Download album"
+msgstr "Преузми све албуме"
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:217
 msgid "Homepage"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:204
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:219
 #, fuzzy
 msgid "Report a bug"
 msgstr "Пријавите грешку..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:206
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:221
 msgid "Make a suggestion"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:209
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:224
 #, fuzzy
 msgid "Translate this application"
 msgstr "Преведите овај програм..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:212
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:227
 #, fuzzy
 msgid "Get help online"
 msgstr "Нађите помоћ на мрежи..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:217
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:232
 msgid "Follow me on Twitter"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:220
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:235
 msgid "Follow me on Facebook"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:223
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:238
 msgid "Follow me on Google+"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:228
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:243
 msgid "Donate"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:233
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:248
 #, fuzzy
 msgid "About..."
 msgstr "О програму"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:247
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:262
 #, fuzzy
 msgid "Configuration"
 msgstr "Информације"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:249
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:264
 msgid "Download all albums"
 msgstr "Преузми све албуме"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:288
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:304
 msgid "Edit"
 msgstr "Уређивање"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:291
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:96
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:307
 msgid "Download"
 msgstr "Преузми"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:294
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:311
 msgid "Copy link to clipboard"
 msgstr "Умножи везу у оставу"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:297
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:315
 msgid "Copy thumbnail 72x72 link to clipboard"
 msgstr "Умножи линк сличице 72x72 у оставу"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:300
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:319
 msgid "Copy thumbnail 144x144 link to clipboard"
 msgstr "Умножи линк сличице 144x144 у оставу"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:303
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:323
 msgid "Copy thumbnail 288x288 link to clipboard"
 msgstr "Умножи линк сличице 288x288 у оставу"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:306
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:326
 msgid "Copy link for web"
 msgstr "Умножи везу адресе веб-а"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:309
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:329
 msgid "Copy image"
 msgstr "Умножи слику"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:312
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:332
 msgid "Paste image"
 msgstr "Убаци слику"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:454
-msgid "Web..."
-msgstr "Веб..."
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:543
+#, fuzzy
+msgid "Loading albums"
+msgstr "Преузимам све албуме..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:455
-msgid "Get help online..."
-msgstr "Нађите помоћ на мрежи..."
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:456
-msgid "Translate this application..."
-msgstr "Преведите овај програм..."
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:457
-msgid "Report a bug..."
-msgstr "Пријавите грешку..."
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:460
-msgid "Follow us in Twitter"
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:575
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:768
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:869
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1133
+msgid "Getting"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:461
-msgid "Follow us in Google+"
-msgstr ""
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:462
-msgid "Follow us in Facebook"
-msgstr ""
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:464
-msgid "About"
-msgstr "О програму"
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:676
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:732
 msgid "Select where to download all albums"
 msgstr "Изаберите где желите да преузмете све албуме"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:686
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:748
 msgid "Downloading all albums..."
 msgstr "Преузимам све албуме..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:708
-msgid ""
-"An application to manage your images in\n"
-"Picasa Web"
-msgstr ""
-"Програм за управљање вашим сликама на\n"
-"Пикаса вебу"
-
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:757
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:798
 msgid "Select where to download the album"
 msgstr "Изаберите где желите да преузмете албум"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:785
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:818
+#, fuzzy
+msgid "Downloading albums..."
+msgstr "Преузимам све албуме..."
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:834
 msgid "Select where download images"
 msgstr "Изаберите где ће слике бити преузете"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1035
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:848
+#, fuzzy
+msgid "Downloading images..."
+msgstr "Отпремам слике..."
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1106
+#, fuzzy
+msgid "Loading images for album"
+msgstr "Отпремам слике..."
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1122
 #, fuzzy
 msgid "Add image"
 msgstr "Умножи слику"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1036
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1123
 #, fuzzy
 msgid "Remove image"
 msgstr "Уклони"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1056
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1173
 #, python-format
 msgid "Do you want to delete %s folders?"
 msgstr "Да ли желите да избришете %s фасцикле?"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1057
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1175
 msgid "Deleting folders..."
 msgstr "Бришем фасцикле..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1059
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1177
 msgid "Do you want to delete this folder?"
 msgstr "Да ли желите да обришете ову фасциклу?"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1060
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1178
 msgid "Deleting folder..."
 msgstr "Бришем фасциклу..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1081
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1200
 #, python-format
 msgid "Do you want to delete %s images?"
 msgstr "Да ли желите да обришете %s слике?"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1082
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1202
 msgid "Deleting images..."
 msgstr "Бришем слике..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1084
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1204
 msgid "Do you want to delete this image?"
 msgstr "Да ли желите да обришете ову слику?"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1085
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1205
 msgid "Deleting image..."
 msgstr "Бришем слику..."
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1130
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1241
+#, fuzzy
+msgid "Removing"
+msgstr "Уклони"
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1276
 msgid "Select one or more images to upload to Picasa Web"
 msgstr "Изаберите једну или више слика да отпремите на Пикасин сајт"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1139
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:166
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1285
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:273
 msgid "Imagenes"
 msgstr "Слике"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:40
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/mainwindow.py:1339
+#, fuzzy
+msgid "Uploading"
+msgstr "Отпремам слике..."
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:35
 #, fuzzy
 msgid "Paste Image"
 msgstr "Убаци слику"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:79
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:80
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/pasteimage.py:83
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:87
 msgid "Tags"
 msgstr "Ознаке"
 
 #: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/picapy.py:176
-msgid "An app to convert video to gif"
+msgid "A client for Google Photos"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:75
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:78
 msgid "Dimensions"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:84
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/informacionimagen.py:91
 msgid "Url"
 msgstr "Адреса"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:40
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:38
 msgid "Edit Image"
 msgstr "Уреди слику"
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:89
-msgid "Change image"
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:108
+#, fuzzy
+msgid "Load new image"
+msgstr "Убаци слику"
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:120
+msgid "Rotate left"
 msgstr ""
 
-#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:159
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:132
+msgid "Rotate right"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:144
+msgid "Flip horizontal"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:156
+msgid "Flip vertical"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:168
+msgid "Grayscale"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:180
+msgid "Instagram sunset"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:192
+msgid "Instagram colorful"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:204
+msgid "Instagram groovy"
+msgstr ""
+
+#: /home/lorenzo/Drive/Programacion/Python/current/picapy/src/editimage.py:266
 msgid "Select one images to upload to Picasa Web"
 msgstr ""
 
@@ -471,6 +505,28 @@ msgstr "Пиакпи"
 msgid "A Picasa Web manager"
 msgstr "Управник за Пикаса веб"
 
+#~ msgid "Web..."
+#~ msgstr "Веб..."
+
+#~ msgid "Get help online..."
+#~ msgstr "Нађите помоћ на мрежи..."
+
+#~ msgid "Translate this application..."
+#~ msgstr "Преведите овај програм..."
+
+#~ msgid "Report a bug..."
+#~ msgstr "Пријавите грешку..."
+
+#~ msgid "About"
+#~ msgstr "О програму"
+
+#~ msgid ""
+#~ "An application to manage your images in\n"
+#~ "Picasa Web"
+#~ msgstr ""
+#~ "Програм за управљање вашим сликама на\n"
+#~ "Пикаса вебу"
+
 #~ msgid "File"
 #~ msgstr "Датотека"
 
@@ -485,9 +541,6 @@ msgstr "Управник за Пикаса веб"
 
 #~ msgid "Exit from Picapy"
 #~ msgstr "Изађи из Пикапија"
-
-#~ msgid "Uploading images..."
-#~ msgstr "Отпремам слике..."
 
 #~ msgid "Select one image to update"
 #~ msgstr "Изаберите једну слику за доградњу"

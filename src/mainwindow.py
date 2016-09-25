@@ -168,7 +168,7 @@ it, do you want to authorize?'))
         self.button_up.set_tooltip_text(_('Go to albums'))
         self.button_up.add(Gtk.Image.new_from_gicon(
             Gio.ThemedIcon.new_with_default_fallbacks(
-                'go-top-symbolic'),
+                'go-home-symbolic'),
             Gtk.IconSize.BUTTON))
         self.button_up.set_sensitive(False)
         self.button_up.connect('clicked', self.on_button1_clicked)
@@ -193,17 +193,19 @@ it, do you want to authorize?'))
         hb.pack_start(self.button_remove)
 
         self.button_download = Gtk.Button()
+        self.button_download.set_tooltip_text(_('Download album'))
         self.button_download.add(Gtk.Image.new_from_gicon(
             Gio.ThemedIcon.new_with_default_fallbacks(
-                'go-down-symbolic'),
+                'folder-download-symbolic'),
             Gtk.IconSize.BUTTON))
         self.button_download.connect('clicked', self.on_descargar_activated)
         hb.pack_start(self.button_download)
 
         self.button_slideshow = Gtk.Button()
+        self.button_slideshow.set_tooltip_text(_('Slideshow'))
         self.button_slideshow.add(Gtk.Image.new_from_gicon(
             Gio.ThemedIcon.new_with_default_fallbacks(
-                'view-fullscreen-symbolic'),
+                'applets-screenshooter-symbolic'),
             Gtk.IconSize.BUTTON))
         self.button_slideshow.set_sensitive(False)
         self.button_slideshow.connect('clicked', self.on_preview_activated)
@@ -616,33 +618,38 @@ it, do you want to authorize?'))
                         self.store.set_value(selected, 1,
                                              updated_album.params['title'])
                         self.store.set_value(selected, 2, updated_album)
-                    '''
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
-                    self.inicia_albums()
-                    self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
-                    '''
                 i.destroy()
             else:
-                selected=self.storeimages.get_iter_from_string(str(items[0]))
-                image = self.storeimages.get_value(selected,2)
-                i=EditImage(self,image)
+                selected = self.storeimages.get_iter_from_string(str(items[0]))
+                image = self.storeimages.get_value(selected, 2)
+                i = EditImage(self, image)
                 if i.run() == Gtk.ResponseType.ACCEPT:
-                    updated_image = self.picasa.edit_photo(self.album.params['id'],image,i.filename,caption=i.entry2.get_text())
+                    pixbuf = i.aimage2.get_pixbuf()
+                    updated_image = self.picasa.edit_photo_from_pixbuf(
+                        self.album.params['id'], image, pixbuf,
+                        caption=i.entry2.get_text())
                     if updated_image is not None:
-                        mdir = os.path.join(comun.IMAGES_DIR, 'album_'+self.album.params['id'])
+                        mdir = os.path.join(comun.IMAGES_DIR,
+                                            'album_' + self.album.params['id'])
                         if not os.path.exists(mdir):
                             os.makedirs(mdir)
-                        mfile = os.path.join(mdir, 'photo_'+updated_image.params['id']+'.png')
+                        mfile = os.path.join(
+                            mdir, 'photo_'+updated_image.params['id']+'.png')
                         if os.path.exists(mfile):
                             os.remove(mfile)
-                        utils.create_icon(mfile,updated_image.params['thumbnail2'],updated_image.params['access'])
+                        utils.create_icon(mfile,
+                                          updated_image.params['thumbnail2'],
+                                          updated_image.params['access'])
                         if os.path.exists(mfile):
                             pixbuf = GdkPixbuf.Pixbuf.new_from_file(mfile)
                         else:
                             pixbuf = PIXBUF_DEFAULT_PHOTO
-                        self.storeimages.set_value(selected,0,pixbuf)
-                        self.storeimages.set_value(selected,1,updated_image.params['title'])
-                        self.storeimages.set_value(selected,2,updated_image)
+                        self.storeimages.set_value(
+                            selected, 0, pixbuf)
+                        self.storeimages.set_value(
+                            selected, 1, updated_image.params['title'])
+                        self.storeimages.set_value(
+                            selected, 2, updated_image)
                 i.destroy()
 
     def on_informacion_activated(self, widget):
@@ -677,11 +684,14 @@ it, do you want to authorize?'))
                 ld.destroy()
                 error = False
                 if self.picasa.do_refresh_authorization() is None:
-                    md = Gtk.MessageDialog(	parent = self,
-                                            flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                            type = Gtk.MessageType.ERROR,
-                                            buttons = Gtk.ButtonsType.OK_CANCEL,
-                                            message_format = _('You have to authorize Picapy to use it, do you want to authorize?'))
+                    md = Gtk.MessageDialog(
+                        parent=self,
+                        flags=Gtk.DialogFlags.MODAL |
+                        Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                        type=Gtk.MessageType.ERROR,
+                        buttons=Gtk.ButtonsType.OK_CANCEL,
+                        message_format=_('You have to authorize Picapy to use \
+it, do you want to authorize?'))
                     if md.run() == Gtk.ResponseType.CANCEL:
                         exit(3)
                 else:
@@ -718,32 +728,57 @@ it, do you want to authorize?'))
             sw = SliderWindow(images, self.time_between_images)
 
     def on_download_all_activate(self, widget):
-        chooser = Gtk.FileChooserDialog(title=_('Select where to download all albums'),parent=self,action=Gtk.FileChooserAction.SELECT_FOLDER,buttons=(Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN,Gtk.ResponseType.OK))
+        chooser = Gtk.FileChooserDialog(
+            title=_('Select where to download all albums'),
+            parent=self,
+            action=Gtk.FileChooserAction.SELECT_FOLDER,
+            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                     Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
         chooser.set_current_folder(self.image_dir)
         if chooser.run() == Gtk.ResponseType.OK:
-            filename=chooser.get_filename()
-            self.image_dir = os.path.dirname(filename)
-            if self.image_dir is None or len(self.image_dir)<=0 or os.path.exists(self.image_dir)==False:
+            filename = chooser.get_filename()
+            self.image_dir = filename
+            if self.image_dir is None or len(self.image_dir) <= 0 or\
+                    os.path.exists(self.image_dir) is False:
                 self.image_dir = os.getenv('HOME')
             chooser.destroy()
             albums = self.picasa.get_albums()
-            if len(albums)>0:
-                progreso=Progreso(_('Downloading all albums...'),self,len(albums))
+            if len(albums) > 0:
                 self.set_wait_cursor()
-                allphotos = []
-                for album in albums:
-                    folder = os.path.join(filename,album.params['id'])
-                    if not os.path.exists(folder):
-                        os.mkdir(folder)
-                    photos=self.picasa.get_photos(album.params['id'])
-                    with concurrent.futures.ProcessPoolExecutor(max_workers=NUM_THREADS) as executor:
-                        for index,photo in enumerate(photos):
-                            executor.submit(utils.download_all_images,folder,photo)
-                    progreso.increase()
-                    while Gtk.events_pending():
-                        Gtk.main_iteration()
-            self.set_normal_cursor()
+                progreso = Progreso(_('Downloading all albums...'),
+                                    self, len(albums))
+                tasker = Tasker(self.download_all_images_from_album, albums,
+                                self.image_dir)
+                progreso.connect('i-want-stop', tasker.stopit)
+                tasker.connect('start-one-element',
+                               self.getting_album,
+                               progreso)
+                tasker.connect('end-one-element', progreso.increase)
+                tasker.connect('finished', progreso.close)
+                tasker.start()
+                progreso.run()
+                self.set_normal_cursor()
         chooser.destroy()
+
+    def getting_album(self, emiter, album, progreso):
+        print(emiter, album, progreso)
+        name = album.params['title']
+        if len(name) > 35:
+            name = name[:32] + '...'
+        label = _('Getting') + ' ' + name
+        progreso.set_label(name)
+
+    def download_all_images_from_album(self, album, folder):
+        print('*******************')
+        print(folder)
+        folder = os.path.join(folder, album.params['id'])
+        print(folder)
+        print('*******************')
+        if not os.path.exists(folder):
+            os.mkdir(folder)
+        photos = self.picasa.get_photos(album.params['id'])
+        utils.download_all_images(folder, photos)
+        return album
 
     def set_wait_cursor(self):
         self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
@@ -775,24 +810,23 @@ it, do you want to authorize?'))
                     chooser.destroy()
                     if len(items) > 0:
                         self.set_wait_cursor()
-                        daemons = []
-                        global cuain
-                        cuain = queue.Queue()
+                        albums = []
                         for item in items:
                             itera = self.store.get_iter_from_string(str(item))
                             album = self.store.get_value(itera, 2)
-                            folder = os.path.join(filename, album.params['id'])
-                            if not os.path.exists(folder):
-                                os.mkdir(folder)
-                            photos = self.picasa.get_photos(album.params['id'])
-                            #
-                            with concurrent.futures.ProcessPoolExecutor(
-                                    max_workers=NUM_THREADS) as executor:
-                                for photo in photos:
-                                    executor.submit(
-                                        utils.download_all_images,
-                                        folder,
-                                        photo)
+                            albums.append(album)
+                        progreso = Progreso(_('Downloading albums...'),
+                                            self, len(albums))
+                        tasker = Tasker(self.download_all_images_from_album,
+                                        albums, self.image_dir)
+                        progreso.connect('i-want-stop', tasker.stopit)
+                        tasker.connect('start-one-element',
+                                       self.getting_album,
+                                       progreso)
+                        tasker.connect('end-one-element', progreso.increase)
+                        tasker.connect('finished', progreso.close)
+                        tasker.start()
+                        progreso.run()
                         self.set_normal_cursor()
                 chooser.destroy()
             else:
@@ -804,16 +838,36 @@ it, do you want to authorize?'))
                              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
                 if chooser.run() == Gtk.ResponseType.OK:
                     dirname = chooser.get_filename()
-                    chooser.destroy()
                     self.set_wait_cursor()
+                    photos = []
                     for item in items:
-                        selected = self.storeimages.get_iter_from_string(
+                        itera = self.storeimages.get_iter_from_string(
                             str(item))
-                        imagen = self.storeimages.get_value(selected, 2)
-                        filename = imagen.params['url'].split('/')[-1]
-                        filename = os.path.join(dirname, filename)
-                        utils.download_image(imagen.params['url'], filename)
-                    self.set_normal_cursor()
+                        photo = self.storeimages.get_value(itera, 2)
+                        photos.append(photo)
+                    progreso = Progreso(_('Downloading images...'),
+                                        self, len(photos))
+                    tasker = Tasker(utils.download_a_photo, photos,
+                                    dirname)
+                    progreso.connect('i-want-stop', tasker.stopit)
+                    tasker.connect('start-one-element',
+                                   self.getting_photo,
+                                   progreso)
+                    tasker.connect('end-one-element', progreso.increase)
+                    tasker.connect('finished', progreso.close)
+                    tasker.start()
+                    progreso.run()
+                self.set_normal_cursor()
+                chooser.destroy()
+
+    def getting_photo(self, emiter, photo, progreso):
+        # print(emiter, photo, progreso)
+        print(emiter, progreso)
+        name = photo.params['title']
+        if len(name) > 35:
+            name = name[:32] + '...'
+        label = _('Getting') + ' ' + name
+        progreso.set_label(name)
 
     def on_menuitem6_activated(self, widget):
         items = self.iconview1.get_selected_items()

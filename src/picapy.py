@@ -187,13 +187,13 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>.
 ''')
-        ad.set_website('https://www.atareao.es')
-        ad.set_website_label('https://www.atareao.es')
-        ad.set_authors([
+        about_dialog.set_website('https://www.atareao.es')
+        about_dialog.set_website_label('https://www.atareao.es')
+        about_dialog.set_authors([
             'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-        ad.set_documenters([
+        about_dialog.set_documenters([
             'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-        ad.set_translator_credits('''
+        about_dialog.set_translator_credits('''
 'Dario Villar Veres <dario.villar.v@gmail.com>\n'+
 'Bernardo Miguel	Savone <bmsavone@gmail.com>\n'+
 'Enbata <peionz@euskalnet.net>\n'+

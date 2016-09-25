@@ -26,8 +26,10 @@ import json
 import os
 from urllib.parse import urlencode
 
+
 class GoogleService(object):
-    def __init__(self,auth_url,token_url,redirect_uri,scope,client_id,client_secret,token_file):
+    def __init__(self, auth_url, token_url, redirect_uri, scope, client_id,
+                 client_secret, token_file):
         self.session = requests.session()
         self.auth_url = auth_url
         self.token_url = token_url
@@ -39,7 +41,7 @@ class GoogleService(object):
         self.access_token = None
         self.refresh_token = None
         if os.path.exists(token_file):
-            f = open(token_file,'r')
+            f = open(token_file, 'r')
             text = f.read()
             f.close()
             try:
@@ -51,20 +53,30 @@ class GoogleService(object):
                 print(e)
 
     def get_authorize_url(self):
-        oauth_params = {'redirect_uri': self.redirect_uri, 'client_id': self.client_id, 'scope': self.scope, 'response_type':'code'}
+        oauth_params = {'redirect_uri': self.redirect_uri,
+                        'client_id': self.client_id,
+                        'scope': self.scope,
+                        'response_type': 'code'}
         authorize_url = "%s?%s" % (self.auth_url, urlencode(oauth_params))
-        print('Authorization url: %s'%authorize_url)
+        print('Authorization url: %s' % authorize_url)
         return authorize_url
 
-    def get_authorization(self,temporary_token):
-        data = {'redirect_uri': self.redirect_uri, 'client_id': self.client_id, 'client_secret': self.client_secret, 'code': temporary_token,'grant_type':'authorization_code','scope':self.scope}
-        response = self.session.request('POST',self.token_url,data=data)
-        if response is not None and response.status_code == 200 and response.text is not None and len(response.text)>0:
+    def get_authorization(self, temporary_token):
+        data = {'redirect_uri': self.redirect_uri,
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'code': temporary_token,
+                'grant_type': 'authorization_code',
+                'scope': self.scope}
+        response = self.session.request('POST', self.token_url, data=data)
+        if response is not None and response.status_code == 200 and\
+                response.text is not None and len(response.text) > 0:
             ans = json.loads(response.text)
             self.access_token = ans['access_token']
             self.refresh_token = ans['refresh_token']
-            f = open(self.token_file,'w')
-            f.write(json.dumps({'access_token':self.access_token,'refresh_token':self.refresh_token}))
+            f = open(self.token_file, 'w')
+            f.write(json.dumps({'access_token': self.access_token,
+                                'refresh_token': self.refresh_token}))
             f.close()
             print('Authorizate')
             return self.access_token, self.refresh_token
@@ -77,33 +89,41 @@ class GoogleService(object):
             os.remove(self.token_file)
 
     def do_refresh_authorization(self):
-        data = {'client_id': self.client_id, 'client_secret': self.client_secret,'refresh_token': self.refresh_token,'grant_type':'refresh_token'}
-        response = self.session.request('POST',self.token_url,data=data)
+        data = {'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'refresh_token': self.refresh_token,
+                'grant_type': 'refresh_token'}
+        response = self.session.request('POST', self.token_url, data=data)
         if response.status_code == 200:
             ans = json.loads(response.text)
             self.access_token = ans['access_token']
-            f = open(self.token_file,'w')
-            f.write(json.dumps({'access_token':self.access_token,'refresh_token':self.refresh_token}))
+            f = open(self.token_file, 'w')
+            f.write(json.dumps({'access_token': self.access_token,
+                                'refresh_token': self.refresh_token}))
             f.close()
             print('Refresh Authorization')
             return self.access_token
         return None
 
-    def do_request(self,method,url,addheaders,data=None,params=None,first=True):
-        headers ={'Authorization':'OAuth %s'%self.access_token}
+    def do_request(self, method, url, addheaders, data=None, params=None,
+                   first=True):
+        headers = {'Authorization': 'OAuth %s' % self.access_token}
         if addheaders:
             headers.update(addheaders)
         print(headers)
         if data:
             if params:
-                response = self.session.request(method,url,data=data,headers=headers,params=params)
+                response = self.session.request(method, url, data=data,
+                                                headers=headers, params=params)
             else:
-                response = self.session.request(method,url,data=data,headers=headers)
+                response = self.session.request(method, url, data=data,
+                                                headers=headers)
         else:
             if params:
-                response = self.session.request(method,url,headers=headers,params=params)
+                response = self.session.request(method, url, headers=headers,
+                                                params=params)
             else:
-                response = self.session.request(method,url,headers=headers)
+                response = self.session.request(method, url, headers=headers)
         print(response)
         if response.status_code == 200:
             return response
@@ -111,5 +131,5 @@ class GoogleService(object):
             ans = self.do_refresh_authorization()
             print(ans)
             if ans:
-                return self.do_request(method,url,addheaders,first=False)
+                return self.do_request(method, url, addheaders, first=False)
         return None

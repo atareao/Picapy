@@ -1,9 +1,10 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# This file is part of 2gif
+# This file is part of picapy
 #
-# Copyright (C) 2015-2016 Lorenzo Carbonell
+# Copyright (C) 2010-2016 Lorenzo Carbonell
+
 # lorenzo.carbonell.cerezo@gmail.com
 #
 # This program is free software: you can redistribute it and/or modify
@@ -18,6 +19,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import gi
 try:

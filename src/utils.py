@@ -29,8 +29,10 @@ except Exception as e:
     exit(-1)
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GLib
 from gi.repository import GdkPixbuf
 import urllib.request
+from PIL import Image
 import comun
 import os
 from os import path
@@ -38,6 +40,39 @@ import time
 import re
 import html.entities
 import cairo
+
+
+def pixbuf2image(pix):
+    """Convert gdkpixbuf to PIL image"""
+    data = pix.get_pixels()
+    w = pix.props.width
+    h = pix.props.height
+    stride = pix.props.rowstride
+    mode = "RGB"
+    if pix.props.has_alpha is True:
+        mode = "RGBA"
+    im = Image.frombytes(mode, (w, h), data, "raw", mode, stride)
+    return im
+
+
+def image2pixbuf(im):
+    """Convert Pillow image to GdkPixbuf"""
+    data = im.tobytes()
+    w, h = im.size
+    data = GLib.Bytes.new(data)
+    pix = GdkPixbuf.Pixbuf.new_from_bytes(data,
+                                          GdkPixbuf.Colorspace.RGB,
+                                          False, 8, w, h, w * 3)
+    return pix
+
+
+def do_gamma(im, gamma):
+    """Fast gamma correction with PIL's image.point() method"""
+    invert_gamma = 1.0/gamma
+    lut = [pow(x/255., invert_gamma) * 255 for x in range(256)]
+    lut = lut*3  # need one set of data for each band for RGB
+    im = im.point(lut)
+    return im
 
 
 def download_image(url_image, filename):
@@ -265,18 +300,42 @@ def download_an_album(album, force):
     return ans
 
 
-def download_all_images(adir, aphoto):
-    filename = os.path.join(adir, aphoto.params['title']+'png')
+def download_all_images(adir, photos):
     opener1 = urllib.request.build_opener()
     try:
-        page1 = opener1.open(aphoto.params['url'])
-        my_picture = page1.read()
-        fout = open(filename, "wb")
-        fout.write(my_picture)
-        fout.close()
+        for aphoto in photos:
+            filename = os.path.join(adir, aphoto.params['title']+'png')
+            page1 = opener1.open(aphoto.params['url'])
+            my_picture = page1.read()
+            fout = open(filename, "wb")
+            fout.write(my_picture)
+            fout.close()
     except:
         return False
     return True
+
+
+def download_a_photo(photo, folder):
+    print('----------------------')
+    print('1', photo, folder)
+    print('----------------------')
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    mfile = os.path.join(folder, 'photo_'+photo.params['id']+'.png')
+    print(mfile)
+    if os.path.exists(mfile):
+        os.remove(mfile)
+    try:
+        opener1 = urllib.request.build_opener()
+        page1 = opener1.open(photo.params['url'])
+        my_picture = page1.read()
+        fout = open(mfile, "wb")
+        fout.write(my_picture)
+        fout.close()
+    except Exception as e:
+        print(e)
+        return None
+    return photo
 
 
 def download_an_image(album_id, photo, force):

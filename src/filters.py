@@ -86,7 +86,8 @@ class CFilterSunset(CFilter):
                 new_image_list.append(new_pixel)
             # make a new image
             new_image.putdata(new_image_list)
-        return new_image
+            return new_image
+        return aImage
 
 
 class CFilterColorful(CFilter):
@@ -135,7 +136,8 @@ class CFilterColorful(CFilter):
                 new_pixel_list.append((r, g, b))
 
             new_image.putdata(new_pixel_list)
-        return new_image
+            return new_image
+        return aImage
 
 
 class CFilterGroovy(CFilter):
@@ -181,7 +183,8 @@ class CFilterGroovy(CFilter):
                                        int(pixels[i][1]*factor),
                                        int(pixels[i][2]*factor)))
             new_image.putdata(new_pixel_list)
-        return new_image
+            return new_image
+        return aImage
 
 
 class CFilterVignette(CFilter):
@@ -220,7 +223,8 @@ class CFilterVignette(CFilter):
                                       int(pixels[i][1]*factor),
                                       int(pixels[i][2]*factor)))
             new_image.putdata(new_pixel_list)
-        return new_image
+            return new_image
+        return aImage
 
 
 class CFilterFade(CFilter):

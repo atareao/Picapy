@@ -28,29 +28,36 @@ COUNTERCLOCKWISE = GdkPixbuf.PixbufRotation.COUNTERCLOCKWISE
 UPSIDEDOWN = GdkPixbuf.PixbufRotation.UPSIDEDOWN
 CLOCKWISE = GdkPixbuf.PixbufRotation.CLOCKWISE
 
-def scale_pixbuf(pixbuf,size):
+
+def scale_pixbuf(pixbuf, size):
     w = pixbuf.get_width()
     h = pixbuf.get_height()
-    if w>size or h>size:
+    if w > size or h > size:
         if w > h:
             h = int(h * size/w)
             w = int(size)
         else:
             w = int(w * size/h)
             h = int(size)
-        pixbuf = GdkPixbuf.Pixbuf.scale_simple(pixbuf,w,h, GdkPixbuf.InterpType.HYPER)
+        pixbuf = GdkPixbuf.Pixbuf.scale_simple(pixbuf, w, h,
+                                               GdkPixbuf.InterpType.HYPER)
     return pixbuf
 
-def rotate_pixbuf(pixbuf,rotation):
-    return GdkPixbuf.Pixbuf.rotate_simple(pixbuf,rotation)
 
-def flip_pixbuf(pixbuf,horizontal):
-    return GdkPixbuf.Pixbuf.flip(pixbuf,horizontal)
+def rotate_pixbuf(pixbuf, rotation):
+    return GdkPixbuf.Pixbuf.rotate_simple(pixbuf, rotation)
+
+
+def flip_pixbuf(pixbuf, horizontal):
+    return GdkPixbuf.Pixbuf.flip(pixbuf, horizontal)
+
 
 def grayscale_pixbuf(pixbuf):
     grayscale = pixbuf.copy()
     pixbuf.saturate_and_pixelate(grayscale, 0.0, False)
     return grayscale
+
+
 def get_array_of_colors(pixbuf):
     colors = []
     alist = pixbuf.get_pixels()
@@ -58,23 +65,29 @@ def get_array_of_colors(pixbuf):
         rows = 4
     else:
         rows = 3
-    for cont in range(0,len(alist),rows):
-        color=tuple(alist[cont:cont+rows])
-        #col=Gdk.RGBA(float(color[0])/256.,float(color[1])/256.,float(color[2])/256.,float(color[3])/256.)
+    for cont in range(0, len(alist), rows):
+        color = tuple(alist[cont:cont+rows])
         colors.append(color)
-        #print(col)
     return colors
+
+
 def int2byte(aint):
     return bytes((aint,))
-def get_string_from_array_of_colors(colors,alpha=False):
+
+
+def get_string_from_array_of_colors(colors, alpha=False):
     data = b''
     if alpha:
         for color in colors:
-            data+=int2byte(color[0])+int2byte(color[1])+int2byte(color[2])
+            data += (int2byte(color[0]) + int2byte(color[1]) +
+                     int2byte(color[2]))
     else:
         for color in colors:
-            data+=int2byte(color[0])+int2byte(color[1])+int2byte(color[2])+int2byte(color[3])
+            data += (int2byte(color[0]) + int2byte(color[1]) +
+                     int2byte(color[2]) + int2byte(color[3]))
     return data
+
+
 def reduce_colors_pixbuf(pixbuf):
     colors = get_array_of_colors(pixbuf)
     alpha = pixbuf.get_has_alpha()
@@ -82,35 +95,28 @@ def reduce_colors_pixbuf(pixbuf):
     print(pixbuf.get_rowstride())
     existing = []
     data = {}
-    percentage = int(0.0001* len(colors))
+    percentage = int(0.0001 * len(colors))
     if percentage <= 0:
         percentage = 1
     print(percentage)
-    for i in range(0,len(colors),percentage):
+    for i in range(0, len(colors), percentage):
         color = colors[i]
         if color in existing:
-            data[color] +=1
+            data[color] += 1
         else:
             existing.append(color)
             data[color] = 1
     print(data)
-    print(get_string_from_array_of_colors(colors,alpha))
-
-    #color=tuple(map(ord, pixbuf.get_pixels()[:3]))
-    #col=Gdk.RGBA(float(color[0])/256.,float(color[1])/256.,float(color[2])/256.)
-    #self.cp.set_current_rgba(col)
+    print(get_string_from_array_of_colors(colors, alpha))
 
 if __name__ == '__main__':
     entrada = '/home/atareao/Imágenes/0029_Tribler 6.0.0.png'
     salida = '/home/atareao/Imágenes/test.png'
     #
-    pixbufinput =  GdkPixbuf.Pixbuf.new_from_file(entrada)
+    pixbufinput = GdkPixbuf.Pixbuf.new_from_file(entrada)
     pixbufoutput = grayscale_pixbuf(pixbufinput)
-    pixbufoutput = rotate_pixbuf(pixbufoutput,CLOCKWISE)
-    pixbufoutput = flip_pixbuf(pixbufoutput,True)
-    #pixbufoutput = reduce_colors_pixbuf(pixbufinput)
-    #print(GdkPixbuf.Pixbuf.save_to_stream(pixbufoutput,filestream,'png',None,None))
-    pixbufoutput.savev(salida,'png',[],[])
+    pixbufoutput = rotate_pixbuf(pixbufoutput, CLOCKWISE)
+    pixbufoutput = flip_pixbuf(pixbufoutput, True)
+    pixbufoutput.savev(salida, 'png', [], [])
     print('end')
-    #pixbufoutput.savev(salida,'png',(),())
     exit(0)

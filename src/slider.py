@@ -32,6 +32,7 @@ import os
 import math
 import comun
 
+
 def wait(time_lapse):
     time_start = time.time()
     time_end = (time_start + time_lapse)
@@ -39,8 +40,9 @@ def wait(time_lapse):
         while Gtk.events_pending():
             Gtk.main_iteration()
 
+
 def load_pixbuf_from_url(url):
-    opener1 =  	urllib.request.build_opener()
+    opener1 = urllib.request.build_opener()
     page1 = opener1.open(url)
     data = page1.read()
     loader = GdkPixbuf.PixbufLoader()
@@ -49,29 +51,33 @@ def load_pixbuf_from_url(url):
     pixbuf = loader.get_pixbuf()
     return pixbuf
 
+
 class NavigatorButton(Gtk.Button):
     def __init__(self, file_image_active, file_image_inactive):
         Gtk.Button.__init__(self)
         self.set_name('navigator_button')
-        self.image_active = Gtk.Image.new_from_file(os.path.join(comun.IMGDIR,file_image_active+'.svg'))
-        self.image_inactive = Gtk.Image.new_from_file(os.path.join(comun.IMGDIR,file_image_inactive+'.svg'))
+        self.image_active = Gtk.Image.new_from_file(
+            os.path.join(comun.IMGDIR, file_image_active+'.svg'))
+        self.image_inactive = Gtk.Image.new_from_file(os.path.join(
+            comun.IMGDIR, file_image_inactive+'.svg'))
         self.set_sensitive(True)
 
-    def set_sensitive(self,sensitive):
-        Gtk.Button.set_sensitive(self,sensitive)
+    def set_sensitive(self, sensitive):
+        Gtk.Button.set_sensitive(self, sensitive)
         if sensitive:
             self.set_image(self.image_active)
         else:
             self.set_image(self.image_inactive)
 
+
 class SliderWindow(Gtk.Window):
-    def __init__(self,images=None,timebi=2):
-        Gtk.Window.__init__(self,type=Gtk.WindowType.TOPLEVEL)
+    def __init__(self, images=None, timebi=2):
+        Gtk.Window.__init__(self, type=Gtk.WindowType.TOPLEVEL)
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
         self.set_icon_from_file(comun.ICON)
         self.set_decorated(False)
         self.set_app_paintable(True)
-        self.connect('key-release-event',self.on_key_release_event)
+        self.connect('key-release-event', self.on_key_release_event)
         screen = self.get_screen()
         visual = screen.get_rgba_visual()
         if visual and screen.is_composited():
@@ -81,28 +87,30 @@ class SliderWindow(Gtk.Window):
         self.add_events(Gdk.EventMask.ALL_EVENTS_MASK)
 
         self.connect('draw', self.on_expose, None)
-        hbox0 = Gtk.Box.new(Gtk.Orientation.HORIZONTAL,0)
+        hbox0 = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         hbox0.set_homogeneous(False)
         self.add(hbox0)
-        button_previous = NavigatorButton('previous_active','previous_inactive')
-        button_previous.connect('clicked',self.on_button_previous_clicked)
-        hbox0.pack_start(button_previous,False,False,0)
-        vbox1 = Gtk.Box.new(Gtk.Orientation.VERTICAL,0)
+        button_previous = NavigatorButton('previous_active',
+                                          'previous_inactive')
+        button_previous.connect('clicked', self.on_button_previous_clicked)
+        hbox0.pack_start(button_previous, False, False, 0)
+        vbox1 = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         vbox1.set_homogeneous(False)
-        hbox0.pack_start(vbox1,True,True,0)
+        hbox0.pack_start(vbox1, True, True, 0)
         self.image = Gtk.Image()
         self.image.set_from_file(comun.ICON)
         vbox1.pack_start(self.image, True, True, 0)
         self.titlelabel = Gtk.Label()
-        self.titlelabel.set_markup("<span foreground='white' font_desc='Ubuntu 20'><b>%s</b></span>" % ('uPdf'))
+        self.titlelabel.set_markup(
+            "<span foreground='white' font_desc='Ubuntu 20'><b>%s</b> \
+</span>" % ('uPdf'))
         vbox1.pack_start(self.titlelabel, False, False, 0)
-        button_next = NavigatorButton('next_active','next_inactive')
-        button_next.connect('clicked',self.on_button_next_clicked)
-        hbox0.pack_start(button_next,False,False,0)
+        button_next = NavigatorButton('next_active', 'next_inactive')
+        button_next.connect('clicked', self.on_button_next_clicked)
+        hbox0.pack_start(button_next, False, False, 0)
         self.fullscreen()
-        #self.maximize()
-        self._images=images
-        self._timebi=timebi
+        self._images = images
+        self._timebi = timebi
         self._current_image = -1
         self._showing = False
         self.load_next_image()
@@ -113,17 +121,21 @@ class SliderWindow(Gtk.Window):
             self.load_next_image()
         return self._showing
 
-    def on_key_release_event(self,widget,event):
+    def on_key_release_event(self, widget, event):
         print(event.keyval, Gdk.keyval_name(event.keyval))
         if event.keyval == Gdk.keyval_from_name('Escape'):
             self.destroy()
-        elif event.keyval == Gdk.keyval_from_name('Right') or event.keyval == Gdk.keyval_from_name('KP_Right'):
+        elif event.keyval == Gdk.keyval_from_name('Right') or\
+                event.keyval == Gdk.keyval_from_name('KP_Right'):
             self.load_next_image()
-        elif event.keyval == Gdk.keyval_from_name('Left') or event.keyval == Gdk.keyval_from_name('KP_Left'):
+        elif event.keyval == Gdk.keyval_from_name('Left') or\
+                event.keyval == Gdk.keyval_from_name('KP_Left'):
             self.load_previous_image()
-        elif event.keyval == Gdk.keyval_from_name('Up') or event.keyval == Gdk.keyval_from_name('KP_Up'):
+        elif event.keyval == Gdk.keyval_from_name('Up') or\
+                event.keyval == Gdk.keyval_from_name('KP_Up'):
             self.load_first_image()
-        elif event.keyval == Gdk.keyval_from_name('Down') or event.keyval == Gdk.keyval_from_name('KP_Down'):
+        elif event.keyval == Gdk.keyval_from_name('Down') or\
+                event.keyval == Gdk.keyval_from_name('KP_Down'):
             self.load_last_image()
         elif event.keyval == Gdk.keyval_from_name('space'):
             if self._showing:
@@ -136,27 +148,30 @@ class SliderWindow(Gtk.Window):
         if self._images is not None:
             self._current_image = 0
             title = self._images[self._current_image].params['title']
-            self.titlelabel.set_markup("<span foreground='white' font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
+            self.titlelabel.set_markup("<span foreground='white' \
+font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
             url = self._images[self._current_image].params['url']
             self.image.set_from_pixbuf(load_pixbuf_from_url(url))
 
     def load_previous_image(self):
         if self._images is not None:
             self._current_image -= 1
-            if self._current_image<0:
+            if self._current_image < 0:
                 self._current_image = len(self._images)-1
             title = self._images[self._current_image].params['title']
-            self.titlelabel.set_markup("<span foreground='white' font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
+            self.titlelabel.set_markup("<span foreground='white' \
+font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
             url = self._images[self._current_image].params['url']
             self.image.set_from_pixbuf(load_pixbuf_from_url(url))
 
     def load_next_image(self):
         if self._images is not None:
             self._current_image += 1
-            if self._current_image>(len(self._images)-1):
+            if self._current_image > (len(self._images)-1):
                 self._current_image = 0
             title = self._images[self._current_image].params['title']
-            self.titlelabel.set_markup("<span foreground='white' font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
+            self.titlelabel.set_markup("<span foreground='white' \
+font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
             url = self._images[self._current_image].params['url']
             self.image.set_from_pixbuf(load_pixbuf_from_url(url))
 
@@ -164,30 +179,25 @@ class SliderWindow(Gtk.Window):
         if self._images is not None:
             self._current_image = len(self._images)-1
             title = self._images[self._current_image].params['title']
-            self.titlelabel.set_markup("<span foreground='white' font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
+            self.titlelabel.set_markup("<span foreground='white' \
+font_desc='Ubuntu 20'><b>%s</b></span>" % (title))
             url = self._images[self._current_image].params['url']
             self.image.set_from_pixbuf(load_pixbuf_from_url(url))
 
-    def on_button_next_clicked(self,widget):
+    def on_button_next_clicked(self, widget):
         self.load_next_image()
 
-    def on_button_previous_clicked(self,widget):
+    def on_button_previous_clicked(self, widget):
         self.load_previous_image()
 
     def on_expose(self, widget, cr, data):
         cr.save()
-        # Sets the operator to clear which deletes everything below where an object is drawn
         cr.set_operator(cairo.OPERATOR_CLEAR)
-        # Makes the mask fill the entire window
         cr.rectangle(0.0, 0.0, *widget.get_size())
-        # Deletes everything in the window (since the compositing operator is clear and mask fills the entire window
         cr.fill()
-        # Set the compositing operator back to the default
-        #cr.set_operator(cairo.OPERATOR_OVER)
         cr.restore()
-
-        cr.set_source_rgba(0.0,0.0,0.0,.8)
-        cr.rectangle(0,0,widget.get_size()[0],widget.get_size()[1])
+        cr.set_source_rgba(0.0, 0.0, 0.0, .8)
+        cr.rectangle(0, 0, widget.get_size()[0], widget.get_size()[1])
         cr.fill()
 
 
@@ -197,15 +207,15 @@ class yourApp():
         self.window.set_title('Your app name')
         self.window.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
         self.window.connect('destroy',	Gtk.main_quit)
-        main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL,1)
+        main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 1)
         main_vbox.set_homogeneous(False)
         self.window.add(main_vbox)
-        hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL,0)
+        hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         hbox.set_homogeneous(False)
 
         self.lbl = Gtk.Label.new('All done! :)')
         self.lbl.set_alignment(0, 0.5)
-        main_vbox.pack_start(self.lbl, True, True,0)
+        main_vbox.pack_start(self.lbl, True, True, 0)
         self.window.show_all()
 
 

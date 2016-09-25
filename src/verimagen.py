@@ -21,49 +21,43 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk,GdkPixbuf
-import urllib.request, urllib.parse, urllib.error
+from gi.repository import Gtk, GdkPixbuf
+import urllib.request
+import urllib.parse
+import urllib.error
 import comun
-import locale
-import gettext
-
-locale.setlocale(locale.LC_ALL, '')
-gettext.bindtextdomain(comun.APP, comun.LANGDIR)
-gettext.textdomain(comun.APP)
-_ = gettext.gettext
+from comun import _
 
 
 class VerImagen(Gtk.Dialog):
-    def __init__(self,parent,imagen):
+    def __init__(self, parent, imagen):
         Gtk.Dialog.__init__(self)
         self.set_title(_('Image'))
         self.set_modal(True)
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT)
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
-        self.set_default_size(800,800)
+        self.set_default_size(800, 800)
         self.set_resizable(True)
         self.connect('destroy', self.close)
-        #
-        vbox = Gtk.VBox(spacing = 5)
+
+        vbox = Gtk.VBox(spacing=5)
         vbox.set_border_width(5)
         self.get_content_area().add(vbox)
-        #
+
         frame = Gtk.Frame()
-        vbox.pack_start(frame,True,True,0)
-        #
+        vbox.pack_start(frame, True, True, 0)
+
         scrolledwindow = Gtk.ScrolledWindow()
-        scrolledwindow.set_size_request(800,800)
-        self.connect('key-release-event',self.on_key_release_event)
+        scrolledwindow.set_size_request(800, 800)
+        self.connect('key-release-event', self.on_key_release_event)
         frame.add(scrolledwindow)
-        #
+
         viewport = Gtk.Viewport()
-        viewport.set_size_request(800,800)
+        viewport.set_size_request(800, 800)
         scrolledwindow.add(viewport)
-        #
-        self.scale=100
-        #
-        #
-        if imagen != None:
+        self.scale = 100
+
+        if imagen is not None:
             f = urllib.request.urlopen(imagen.params['url'])
             data = f.read()
             pbl = GdkPixbuf.PixbufLoader()
@@ -76,25 +70,26 @@ class VerImagen(Gtk.Dialog):
         else:
             self.pbuf = None
         self.show_all()
-        #
-    def on_key_release_event(self,widget,event):
+
+    def on_key_release_event(self, widget, event):
         print((event.keyval))
         if event.keyval == 65451 or event.keyval == 43:
-            self.scale=self.scale*1.1
+            self.scale = self.scale*1.1
         elif event.keyval == 65453 or event.keyval == 45:
-            self.scale=self.scale*.9
+            self.scale = self.scale*.9
         elif event.keyval == 65456 or event.keyval == 48:
             self.scale = 100
-        if self.pbuf != None:
-            w=int(self.pbuf.get_width()*self.scale/100)
-            h=int(self.pbuf.get_height()*self.scale/100)
-            pixbuf=self.pbuf.scale_simple(w,h,GdkPixbuf.InterpType.BILINEAR)
+        if self.pbuf is not None:
+            w = int(self.pbuf.get_width()*self.scale/100)
+            h = int(self.pbuf.get_height()*self.scale/100)
+            pixbuf = self.pbuf.scale_simple(w, h,
+                                            GdkPixbuf.InterpType.BILINEAR)
             self.image.set_from_pixbuf(pixbuf)
 
-    def close(self,widget):
+    def close(self, widget):
         self.destroy()
 
 if __name__ == '__main__':
-    vi = VerImagen(None,None)
+    vi = VerImagen(None, None)
     vi.run()
     exit(0)
