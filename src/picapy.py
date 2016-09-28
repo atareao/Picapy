@@ -35,6 +35,8 @@ from gi.repository import GLib
 from gi.repository import GdkPixbuf
 import sys
 import os
+import dbus
+import dbus.service
 import webbrowser
 from mainwindow import MainWindow
 import comun
@@ -49,6 +51,7 @@ class MainApplication(Gtk.Application):
             flags=Gio.ApplicationFlags.FLAGS_NONE
         )
         self.license_type = Gtk.License.GPL_3_0
+        self.win = None
 
     def do_shutdown(self):
         Gtk.Application.do_shutdown(self)
@@ -133,9 +136,12 @@ picapy-gestionar-google-photos-ubuntu/')))
 
     def do_activate(self):
         print('activate')
-        self.win = MainWindow(self)
-        self.add_window(self.win)
-        self.win.show()
+        if self.win is None:
+            self.win = MainWindow(self)
+            self.add_window(self.win)
+            self.win.show()
+        else:
+            self.win.present()
 
     def action_clicked(self, action, variant):
         print(action, variant)
